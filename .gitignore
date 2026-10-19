@@ -1,0 +1,23 @@
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Rendered media & frame outputs
+*.mp4
+*.wav
+frame_*.png
+
+# Old / scratch scripts
+old_*.py
+
+# OS & editor files
+.DS_Store
+.idea/
+.vscode/
+

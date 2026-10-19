@@ -1,0 +1,74 @@
+{
+  "title": "How to make passive income",
+  "duration": 30,
+  "fps": 30,
+  "background": "grid",
+  "output": "passive_income.mp4",
+  "sfx_volume": 0.8,
+  "fade_in": 0.35,
+  "fade_out": 0.5,
+  "music": { "style": "upbeat", "volume": 0.25 },
+  "characters": [
+    { "name": "bob", "x": 0.34, "ground": 0.86, "facing": 1 }
+  ],
+  "events": [
+    { "note": "BEAT 1 - HOOK (0-3 s)" , "type": "title", "start": 0.25, "end": 2.9, "text": "PASSIVE INCOME", "sub": "Make money beyond your 9-to-5", "size": 100, "y": 0.30 },
+    { "type": "pose", "char": "bob", "start": 0.25, "pose": "wave", "dur": 0.35, "ease": "back", "face": "happy" },
+    { "type": "layer", "char": "bob", "start": 0.35, "end": 1.35, "layer": "wave" },
+    { "type": "pose", "char": "bob", "start": 1.5, "pose": "point_you", "dur": 0.3, "ease": "back", "face": "excited" },
+    { "type": "layer", "char": "bob", "start": 1.6, "end": 2.7, "layer": "talk" },
+    { "type": "caption", "start": 2.0, "end": 3.0, "text": "3 IDEAS TO GET STARTED", "pos": "bottom", "size": 46, "color": "BLUE" },
+
+    { "note": "BEAT 2 - WHAT IT MEANS (3-7 s)", "type": "pose", "char": "bob", "start": 3.0, "pose": "think", "dur": 0.35, "face": "thinking" },
+    { "type": "layer", "char": "bob", "start": 3.3, "end": 4.0, "layer": "look_around" },
+    { "type": "speech", "char": "bob", "start": 3.35, "end": 6.8, "text": "Build something that can earn over time!", "side": 1, "size": 36, "voice": true, "voice_pitch": 1.05 },
+    { "type": "prop", "prop": "lightbulb", "start": 3.6, "end": 6.8, "char": "bob", "anchor": "above_head", "offset": [0.35, -0.05] },
+    { "type": "pose", "char": "bob", "start": 4.3, "pose": "point_up", "dur": 0.35, "ease": "back", "face": "excited" },
+    { "type": "layer", "char": "bob", "start": 4.8, "end": 6.5, "layer": "nod" },
+    { "type": "caption", "start": 5.7, "end": 7.0, "text": "WORK UPFRONT. POTENTIAL REWARDS LATER.", "pos": "bottom", "size": 34 },
+
+    { "note": "BEAT 3 - IDEA 1: DIGITAL PRODUCTS (7-12 s)", "type": "pose", "char": "bob", "start": 7.0, "pose": "present", "dur": 0.35, "face": "happy" },
+    { "type": "caption", "start": 7.1, "end": 11.9, "text": "1. SELL DIGITAL PRODUCTS", "pos": "top", "size": 48, "color": "BLUE" },
+    { "type": "prop", "prop": "laptop", "start": 7.2, "end": 11.9, "x": 0.73, "y": 0.62, "scale": 1.15 },
+    { "type": "layer", "char": "bob", "start": 7.5, "end": 9.0, "layer": "talk" },
+    { "type": "caption", "start": 8.6, "end": 11.9, "text": "Templates • E-books • Online guides", "pos": [0.73, 0.78], "size": 31 },
+    { "type": "pose", "char": "bob", "start": 9.2, "pose": "type", "dur": 0.35, "face": "focused" },
+    { "type": "layer", "char": "bob", "start": 9.5, "end": 11.3, "layer": "type" },
+    { "type": "effect", "effect": "sparkles", "start": 10.8, "end": 11.7, "x": 0.76, "y": 0.49, "count": 7, "color": "GOLD", "intensity": 0.8 },
+
+    { "note": "BEAT 4 - IDEA 2: INVESTING (12-17 s)", "type": "pose", "char": "bob", "start": 12.0, "pose": "think", "dur": 0.35, "face": "thinking" },
+    { "type": "caption", "start": 12.0, "end": 16.9, "text": "2. INVEST FOR POTENTIAL RETURNS", "pos": "top", "size": 43, "color": "GREEN" },
+    { "type": "prop", "prop": "chart", "start": 12.1, "end": 16.8, "x": 0.74, "y": 0.53, "scale": 1.2, "anim": "grow", "bars": [0.25, 0.4, 0.55, 0.75, 1.0], "grow": 1.0 },
+    { "type": "pose", "char": "bob", "start": 12.8, "pose": "point_side", "dur": 0.3, "ease": "back", "face": "happy" },
+    { "type": "prop", "prop": "coin_stack", "start": 13.3, "end": 16.7, "x": 0.83, "y": 0.76, "scale": 0.9 },
+    { "type": "caption", "start": 14.0, "end": 16.9, "text": "Dividends • Long-term growth", "pos": "bottom", "size": 36 },
+    { "type": "effect", "effect": "sparkles", "start": 15.0, "end": 16.4, "x": 0.79, "y": 0.40, "count": 8, "color": "GOLD", "intensity": 0.8 },
+    { "type": "pose", "char": "bob", "start": 15.1, "pose": "present", "dur": 0.35, "face": "proud" },
+    { "type": "layer", "char": "bob", "start": 15.5, "end": 16.7, "layer": "nod" },
+
+    { "note": "BEAT 5 - IDEA 3: ROYALTIES (17-22 s)", "type": "pose", "char": "bob", "start": 17.0, "pose": "read", "dur": 0.35, "face": "focused" },
+    { "type": "caption", "start": 17.0, "end": 21.9, "text": "3. EARN ROYALTIES", "pos": "top", "size": 52, "color": "PURPLE" },
+    { "type": "prop", "prop": "book", "start": 17.1, "end": 21.8, "x": 0.73, "y": 0.58, "scale": 1.25, "color": "BLUE", "title": "YOUR IDEAS" },
+    { "type": "caption", "start": 18.4, "end": 21.9, "text": "Books • Music • Creative work", "pos": "bottom", "size": 37 },
+    { "type": "pose", "char": "bob", "start": 19.1, "pose": "present", "dur": 0.35, "face": "happy" },
+    { "type": "layer", "char": "bob", "start": 19.5, "end": 21.2, "layer": "talk" },
+    { "type": "effect", "effect": "sparkles", "start": 20.4, "end": 21.6, "x": 0.79, "y": 0.42, "count": 7, "color": "PURPLE", "intensity": 0.9 },
+
+    { "note": "BEAT 6 - RECAP (22-26 s)", "type": "pose", "char": "bob", "start": 22.0, "pose": "point_side", "dur": 0.3, "face": "excited" },
+    { "type": "caption", "start": 22.0, "end": 25.9, "text": "CREATE. INVEST. EARN ROYALTIES.", "pos": "top", "size": 44 },
+    { "type": "prop", "prop": "sign", "start": 22.2, "end": 25.8, "x": 0.73, "y": 0.49, "scale": 1.05, "text": "BUILD ASSETS" },
+    { "type": "pose", "char": "bob", "start": 23.4, "pose": "cheer", "dur": 0.35, "ease": "back", "face": "very_happy" },
+    { "type": "effect", "effect": "confetti", "start": 23.5, "end": 25.2, "x": 0.52, "y": 0.43, "count": 24, "intensity": 0.8 },
+    { "type": "layer", "char": "bob", "start": 23.8, "end": 25.4, "layer": "bounce" },
+    { "type": "caption", "start": 24.1, "end": 25.9, "text": "Small steps can build over time.", "pos": "bottom", "size": 34, "color": "GREEN" },
+
+    { "note": "BEAT 7 - REALISTIC ENDING (26-30 s)", "type": "pose", "char": "bob", "start": 26.0, "pose": "think", "dur": 0.4, "face": "thinking" },
+    { "type": "caption", "start": 26.0, "end": 29.7, "text": "PASSIVE INCOME TAKES WORK UPFRONT.", "pos": "top", "size": 43 },
+    { "type": "speech", "char": "bob", "start": 26.3, "end": 29.1, "text": "Build it patiently. Keep improving it!", "side": 1, "size": 34, "voice": true },
+    { "type": "layer", "char": "bob", "start": 26.4, "end": 27.1, "layer": "nod" },
+    { "type": "pose", "char": "bob", "start": 28.0, "pose": "point_you", "dur": 0.35, "ease": "back", "face": "happy" },
+    { "type": "caption", "start": 28.2, "end": 29.7, "text": "START SMALL. STAY CONSISTENT.", "pos": "bottom", "size": 36, "color": "GREEN" },
+    { "type": "layer", "char": "bob", "start": 28.4, "end": 29.5, "layer": "nod" }
+  ]
+}
+

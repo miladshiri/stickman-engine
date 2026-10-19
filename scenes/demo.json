@@ -1,0 +1,52 @@
+{
+  "title": "Feature demo - uses every event type",
+  "duration": 10,
+  "background": "grid",
+  "output": "demo.mp4",
+  "fade_in": 0.3,
+  "fade_out": 0.4,
+  "music": { "style": "happy", "volume": 0.22 },
+  "characters": [
+    { "name": "bob", "x": 0.25 },
+    { "name": "amy", "x": 0.78, "color": "PURPLE", "visible": false }
+  ],
+  "events": [
+    { "type": "title", "start": 0.2, "end": 1.8, "text": "SAVE 20%", "sub": "a tiny habit", "y": 0.35 },
+    { "type": "pose", "char": "bob", "start": 0.2, "pose": "wave", "ease": "back", "face": "happy" },
+    { "type": "layer", "char": "bob", "start": 0.4, "end": 1.6, "layer": "wave" },
+
+    { "type": "walk", "char": "bob", "start": 1.8, "x": 0.4 },
+    { "type": "pose", "char": "bob", "start": 1.8, "pose": "phone", "only": "right" },
+    { "type": "hold", "char": "bob", "prop": "phone", "start": 1.8, "end": 3.6 },
+    { "type": "look", "char": "bob", "start": 2.0, "x": 0.6, "y": 0.4 },
+    { "type": "show", "char": "amy", "start": 2.6 },
+    { "type": "speech", "char": "amy", "start": 2.9, "end": 4.6, "text": "Saving anything yet?", "voice": true, "voice_pitch": 1.3 },
+    { "type": "turn", "char": "amy", "start": 2.9, "facing": -1 },
+    { "type": "expression", "char": "bob", "start": 3.6, "face": "worried" },
+    { "type": "pose", "char": "bob", "start": 3.6, "pose": "nervous", "face": "worried" },
+    { "type": "layer", "char": "bob", "start": 3.8, "end": 4.6, "layer": "tremble" },
+
+    { "type": "camera", "start": 4.6, "zoom": 1.25, "char": "bob", "dur": 0.5 },
+    { "type": "pose", "char": "bob", "start": 4.7, "pose": "point_up", "ease": "back", "face": "excited" },
+    { "type": "prop", "prop": "lightbulb", "start": 4.7, "end": 6.0, "char": "bob", "anchor": "above_head" },
+    { "type": "camera", "start": 6.0, "zoom": 1.0, "dur": 0.5 },
+
+    { "type": "rect", "start": 6.0, "end": 9.4, "x": 0.62, "y": 0.28, "w": 0.26, "h": 0.12, "fill": "LIGHT_GREEN", "text": "Pay yourself first", "text_size": 40 },
+    { "type": "progress", "start": 6.3, "end": 9.4, "x": 0.62, "y": 0.47, "w": 0.26, "from": 0.0, "to": 0.2, "label": "Savings rate" },
+    { "type": "arrow", "start": 6.6, "end": 9.4, "from": [0.5, 0.66], "to": [0.53, 0.5], "color": "GREEN", "bend": 0.2 },
+    { "type": "counter", "start": 6.6, "end": 9.4, "from": 0, "to": 2400, "prefix": "$", "suffix": "/yr", "x": 0.85, "y": 0.1 },
+    { "type": "circle", "start": 7.4, "end": 9.4, "x": 0.86, "y": 0.47, "r": 0.06, "fill": "YELLOW", "text": "20%", "text_size": 44 },
+
+    { "type": "pose", "char": "bob", "start": 7.6, "pose": "jump_prep", "dur": 0.2 },
+    { "type": "jump", "char": "bob", "start": 7.8 },
+    { "type": "pose", "char": "bob", "start": 7.95, "pose": "cheer", "dur": 0.25, "ease": "back", "face": "very_happy" },
+    { "type": "pose", "char": "amy", "start": 8.0, "pose": "clap", "face": "happy" },
+    { "type": "layer", "char": "amy", "start": 8.1, "end": 9.4, "layer": "clap" },
+    { "type": "effect", "effect": "confetti", "start": 8.0, "end": 9.6, "x": 0.5, "y": 0.4 },
+    { "type": "sound", "start": 8.0, "sound": "success", "volume": 0.6 },
+    { "type": "caption", "start": 8.2, "end": 9.8, "text": "Start small. Start today.", "pos": "bottom", "size": 50, "color": "GREEN" },
+    { "type": "move", "char": "amy", "start": 9.0, "x": 0.82, "dur": 0.4 },
+    { "type": "hide", "char": "amy", "start": 9.5 }
+  ]
+}
+

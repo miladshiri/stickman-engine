@@ -1,0 +1,330 @@
+{
+  "title": "Stay Consistent on YouTube",
+  "duration": 20,
+  "fps": 30,
+  "background": "grid",
+  "output": "youtube_persistence.mp4",
+  "sound": true,
+  "sfx_volume": 1.0,
+  "fade_in": 0.3,
+  "fade_out": 0.5,
+  "music": {
+    "style": "upbeat",
+    "volume": 0.25,
+    "start": 0,
+    "end": 20,
+    "bpm": 110
+  },
+  "characters": [
+    {
+      "name": "creator",
+      "x": 0.35,
+      "ground": 0.86,
+      "scale": 1.0,
+      "color": "INK",
+      "facing": 1,
+      "visible": true
+    }
+  ],
+  "events": [
+    {
+      "type": "title",
+      "start": 0,
+      "end": 2.8,
+      "text": "KEEP CREATING",
+      "sub": "The YouTube persistence mindset",
+      "size": 76,
+      "color": "RED",
+      "y": 0.2
+    },
+    {
+      "type": "pose",
+      "char": "creator",
+      "start": 0.2,
+      "pose": "type",
+      "dur": 0.35,
+      "face": "focused"
+    },
+    {
+      "type": "prop",
+      "prop": "laptop",
+      "start": 0.2,
+      "end": 4.0,
+      "char": "creator",
+      "anchor": "chest",
+      "offset": [0.25, 0.0],
+      "scale": 0.8,
+      "anim": "pop"
+    },
+    {
+      "type": "caption",
+      "start": 0.5,
+      "end": 3.8,
+      "text": "Your first videos may get few views.",
+      "pos": "bottom",
+      "size": 40,
+      "color": "INK",
+      "typewriter": true
+    },
+    {
+      "type": "pose",
+      "char": "creator",
+      "start": 2.8,
+      "pose": "look_far",
+      "dur": 0.35,
+      "face": "sad"
+    },
+    {
+      "type": "prop",
+      "prop": "chart",
+      "start": 3.0,
+      "end": 5.8,
+      "x": 0.75,
+      "y": 0.48,
+      "scale": 0.8,
+      "anim": "grow",
+      "bars": [0.8, 0.25, 0.15],
+      "color": "RED"
+    },
+    {
+      "type": "pose",
+      "char": "creator",
+      "start": 4.0,
+      "pose": "facepalm",
+      "dur": 0.35,
+      "face": "worried"
+    },
+    {
+      "type": "speech",
+      "char": "creator",
+      "start": 4.2,
+      "end": 6.0,
+      "text": "Is anyone even watching?",
+      "kind": "thought",
+      "side": 1,
+      "size": 34
+    },
+    {
+      "type": "caption",
+      "start": 4.2,
+      "end": 7.5,
+      "text": "Low views are not failure.",
+      "pos": "bottom",
+      "size": 44,
+      "color": "RED"
+    },
+    {
+      "type": "pose",
+      "char": "creator",
+      "start": 5.8,
+      "pose": "sad",
+      "dur": 0.3,
+      "face": "sad"
+    },
+    {
+      "type": "layer",
+      "char": "creator",
+      "start": 5.9,
+      "end": 7.0,
+      "layer": "shake_head"
+    },
+    {
+      "type": "pose",
+      "char": "creator",
+      "start": 7.2,
+      "pose": "think",
+      "dur": 0.4,
+      "face": "thinking"
+    },
+    {
+      "type": "caption",
+      "start": 7.6,
+      "end": 10.6,
+      "text": "Focus on progress, not numbers.",
+      "pos": "top",
+      "size": 42,
+      "color": "BLUE"
+    },
+    {
+      "type": "prop",
+      "prop": "lightbulb",
+      "start": 8.0,
+      "end": 10.5,
+      "char": "creator",
+      "anchor": "above_head",
+      "scale": 0.8,
+      "color": "GOLD",
+      "anim": "pop"
+    },
+    {
+      "type": "pose",
+      "char": "creator",
+      "start": 8.2,
+      "pose": "point_up",
+      "dur": 0.3,
+      "ease": "back",
+      "face": "excited"
+    },
+    {
+      "type": "effect",
+      "effect": "sparkles",
+      "start": 8.2,
+      "end": 9.2,
+      "char": "creator",
+      "anchor": "above_head",
+      "count": 8,
+      "color": "GOLD"
+    },
+    {
+      "type": "pose",
+      "char": "creator",
+      "start": 9.6,
+      "pose": "write",
+      "dur": 0.3,
+      "face": "focused"
+    },
+    {
+      "type": "prop",
+      "prop": "book",
+      "start": 9.6,
+      "end": 12.5,
+      "x": 0.68,
+      "y": 0.67,
+      "scale": 0.9,
+      "anim": "pop",
+      "color": "BLUE",
+      "title": "VIDEO IDEAS"
+    },
+    {
+      "type": "caption",
+      "start": 10.7,
+      "end": 13.5,
+      "text": "Make a schedule. Keep learning.",
+      "pos": "bottom",
+      "size": 42,
+      "color": "INK"
+    },
+    {
+      "type": "pose",
+      "char": "creator",
+      "start": 11.2,
+      "pose": "type",
+      "dur": 0.3,
+      "face": "focused"
+    },
+    {
+      "type": "layer",
+      "char": "creator",
+      "start": 11.5,
+      "end": 13.0,
+      "layer": "type"
+    },
+    {
+      "type": "pose",
+      "char": "creator",
+      "start": 13.0,
+      "pose": "present",
+      "dur": 0.35,
+      "ease": "io",
+      "face": "proud"
+    },
+    {
+      "type": "prop",
+      "prop": "chart",
+      "start": 13.0,
+      "end": 16.5,
+      "x": 0.73,
+      "y": 0.43,
+      "scale": 1.0,
+      "anim": "grow",
+      "bars": [0.2, 0.45, 0.7, 1.0],
+      "color": "GREEN"
+    },
+    {
+      "type": "caption",
+      "start": 13.5,
+      "end": 16.5,
+      "text": "Every upload makes you better.",
+      "pos": "bottom",
+      "size": 42,
+      "color": "GREEN"
+    },
+    {
+      "type": "pose",
+      "char": "creator",
+      "start": 14.5,
+      "pose": "cheer",
+      "dur": 0.3,
+      "ease": "back",
+      "face": "excited"
+    },
+    {
+      "type": "layer",
+      "char": "creator",
+      "start": 14.6,
+      "end": 16.0,
+      "layer": "bounce"
+    },
+    {
+      "type": "effect",
+      "effect": "confetti",
+      "start": 14.7,
+      "end": 16.0,
+      "x": 0.55,
+      "y": 0.3,
+      "count": 15,
+      "color": "GOLD"
+    },
+    {
+      "type": "caption",
+      "start": 16.6,
+      "end": 20,
+      "text": "DON'T QUIT. KEEP CREATING.",
+      "pos": "top",
+      "size": 54,
+      "color": "RED",
+      "typewriter": true
+    },
+    {
+      "type": "pose",
+      "char": "creator",
+      "start": 16.7,
+      "pose": "fist_pump",
+      "dur": 0.3,
+      "ease": "back",
+      "face": "very_happy"
+    },
+    {
+      "type": "layer",
+      "char": "creator",
+      "start": 17.0,
+      "end": 19.0,
+      "layer": "bounce"
+    },
+    {
+      "type": "effect",
+      "effect": "sparkles",
+      "start": 17.0,
+      "end": 19.8,
+      "x": 0.5,
+      "y": 0.45,
+      "count": 12,
+      "color": "GOLD"
+    },
+    {
+      "type": "sound",
+      "start": 17.0,
+      "sound": "success",
+      "volume": 0.8
+    },
+    {
+      "type": "pose",
+      "char": "creator",
+      "start": 18.5,
+      "pose": "victory",
+      "dur": 0.3,
+      "ease": "back",
+      "face": "proud"
+    }
+  ]
+}
