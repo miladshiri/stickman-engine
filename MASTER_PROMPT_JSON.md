@@ -94,7 +94,7 @@ Keys in **bold** are required. Defaults are shown after `=`.
 | `sound` | **sound**, volume=1, pan=0, pitch=1, dur | Manual sound effect. |
 
 - `prop` / `effect` placement: either `"x"` + `"y"`, or `"char": "bob"` plus `"anchor"`. `offset` is in character heights.
-- `anim`: `pop | drop | grow | slide_left | slide_right | float | none`.
+- `anim`: `pop | drop | grow | slide_left | slide_right | float | bounce | pulse | none`.
 - **Anchors:** `head, above_head, top, face, mouth, chest, hip, feet, hand_r, hand_l, left, right`.
 - `ease`: `linear, in, out, io, back` (overshoot), `elastic, bounce`.
 
@@ -119,7 +119,7 @@ Sounds happen automatically: props and effects pop with matching sounds, caption
 
 ## NAMES (use exactly these)
 
-**POSES:** `rest, hands_on_hips, wave, wave_both, point_up, point_side, point_down, think, facepalm, phone, shrug, cheer, victory, fist_pump, clap, cross_arms, hands_on_head, scared, stop, present, welcome, thumbs_up, peace, angry, sad, tired, flex, type, carry, hold_up, pray, reach_up, surrender, explain, dance_a, dance_b, crouch, jump_prep, kick, balance, salute, bow, head_scratch, shush, listen, look_far, drink, stretch, point_you, cry, write, read, push, handshake, shocked, laugh, nervous, embarrassed, call_out, beckon, measure, point_screen, punch, fight_stance, fall_back, sit, kneel`
+**POSES:** `rest, hands_on_hips, wave, wave_both, point_up, point_side, point_down, think, facepalm, phone, shrug, cheer, victory, fist_pump, clap, cross_arms, hands_on_head, scared, stop, present, welcome, thumbs_up, peace, angry, sad, tired, flex, type, carry, hold_up, pray, reach_up, surrender, explain, dance_a, dance_b, crouch, jump_prep, kick, balance, salute, bow, head_scratch, shush, listen, look_far, drink, stretch, point_you, cry, write, read, push, handshake, shocked, laugh, nervous, embarrassed, call_out, beckon, measure, point_screen, punch, fight_stance, fall_back, sit, kneel, present_both, plan_board, film, podcast, meditate, juggle, graduate, celebrate_jump`
 
 Pose tips:
 - **Combos:**
@@ -128,7 +128,13 @@ Pose tips:
   - `read` + `hold` book.
   - `type` + prop `workstation` at the character's feet.
   - `carry` / `hold_up` + `hold` box or sign.
-  - `write` + `hold` sign with `hand: "l"` and `text: ""` (works as a notepad).
+  - `write` + `hold` sign with `hand: "l"` and `text: ""` (works as a notepad) + layer `write`.
+  - `plan_board` + prop `whiteboard`, `roadmap`, or `checklist` next to the character.
+  - `film` + prop `camera_rec`.
+  - `podcast` + prop `microphone` on a `desk`.
+  - `meditate` + layer `float`.
+  - `juggle` + layer `juggle`.
+  - `graduate` + `hold` `certificate` or prop `graduation_cap` at anchor `top`.
 - **Sitting:** for `sit`, add prop `chair` with `"char": name, "anchor": "feet", "z": -1`. Combine it with arm poses using `"only": "arms"`, and return to `rest` before walking.
 - **Kneeling:** `kneel` can be combined with `"only": "arms"` poses like `pray` or `present`.
 - **Directional poses:**
@@ -142,15 +148,20 @@ Pose tips:
   - `cry` + face `sad`.
   - `head_scratch` + face `confused`.
 
-**FACES:** `neutral, happy, very_happy, laugh, excited, proud, smug, sad, worried, scared, angry, furious, surprised, shocked, thinking, focused, confused, disgusted, sleepy, love`
+**FACES:** `neutral, happy, very_happy, laugh, excited, proud, confident, determined, calm, curious, serious, smug, sad, worried, scared, nervous, embarrassed, tired, bored, angry, furious, surprised, shocked, thinking, focused, confused, disgusted, sleepy, love`
 
-**LAYERS:** `wave, wave_l, wave_both, talk, nod, shake_head, tremble, bounce, clap, type, laugh, look_around, float, breathe_hard`
+**LAYERS:** `wave, wave_l, wave_both, talk, nod, shake_head, tremble, bounce, clap, type, laugh, look_around, float, breathe_hard, write, juggle`
 
 **PROPS** (with their extra args):
-`lightbulb(on, color), laptop(label, color), desk(width, height), workstation(label), money_bill(ang), coin(flip), coin_stack(n), money_bag, phone, coffee, sign(text, color), box(label), trophy, heart(color), star(color), question, exclamation, sweat, zzz, anger, music_note, chart(bars=[0.2,0.5,1.0], grow, color), clock, cloud, sun, tree, house, chair(color), book(color, title)`
+- **General & Scenery:** `lightbulb(on, color), laptop(label, color), desk(width, height), workstation(label), phone, coffee, sign(text, color), box(label), trophy, heart(color), star(color), question, exclamation, sweat, zzz, anger, music_note, clock, cloud, sun, tree, house, chair(color)`
+- **Productivity & Focus:** `checklist(items, checked, color), hourglass(color), target(arrow, color), rocket(flame, color), battery(level, charge, color), gear(color), alarm_clock(ring, color)`
+- **Making Money & Finance:** `money_bill(ang), coin(flip), coin_stack(n), money_bag, chart(bars=[0.2,0.5,1.0], grow, color), piggy_bank(coin_drop, color), credit_card(label, color), pie_chart(slices=[0.45,0.3,0.25], grow), line_chart(points=[0.15,0.35,0.28,0.65,0.55,0.95], grow, color), safe(open_at, color), diamond(color), magnet(coins, color)`
+- **Planning & Strategy:** `calendar(day, mark, color), roadmap(steps, color), whiteboard(title, color), compass(color)`
+- **Education & Ideas:** `book(color, title), graduation_cap(color), brain(glow, color), certificate(label, color), globe(color)`
+- **YouTube & Content Creation:** `youtube_play(subs, color), subscribe_btn(clicked_at, text), camera_rec(rec), microphone(waves, color), video_player(progress, likes, color), megaphone(waves, color)`
 - `tree`, `house`, `desk`, `workstation` and `chair` stand on the ground: use `y` equal to the character's `ground` (≈0.86), or `"char"` + `"anchor": "feet"`.
 
-**EFFECTS:** `money_rain, confetti, coins_burst, burst, sparkles, hearts, speed_lines, smoke, shake, flash`
+**EFFECTS:** `money_rain, confetti, coins_burst, burst, sparkles, hearts, speed_lines, smoke, shake, flash, likes_burst, fireworks`
 
 **SOUNDS:** `pop, bubble, boing, whoosh, swish, ding, chime, coin, coins, cha_ching, sparkle, magic, boom, thud, impact, punch, poof, click, tick, blip, type, step, zap, rumble, success, fail, alert, question, heart, drop, notify, party, rise, snore`
 
@@ -169,8 +180,9 @@ Pose tips:
 4. **Don't overlap actions by accident.**
    - A `walk` takes about 1 s per 0.2 of screen width, so start the next pose after the walk ends.
    - A `jump` ends at start + dur + 0.34.
-5. **Layout.**
+5. **Layout & Staging.**
    - Characters stand at x 0.2–0.8 and ground 0.82–0.88.
+   - **Vary the character's horizontal position (left, middle, right) across different scenes/beats:** never keep the character standing in the same spot for the whole video. Use `walk` or `run` events to move them between **left** (`x ≈ 0.25–0.35`), **middle** (`x ≈ 0.50`), and **right** (`x ≈ 0.65–0.75`) from scene to scene, placing props, charts, and graphics on the opposite side of the screen to balance the composition.
    - Captions go at the top or bottom, speech near characters.
    - Keep props and graphics away from faces (character heads are around y 0.45–0.55).
 6. **Readability.**

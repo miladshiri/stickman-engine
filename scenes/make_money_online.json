@@ -1,0 +1,488 @@
+
+{
+  "title": "Make Money Online",
+  "duration": 20,
+  "fps": 30,
+  "background": "grid",
+  "output": "make_money_online.mp4",
+  "sound": true,
+  "sfx_volume": 0.8,
+  "fade_in": 0.3,
+  "fade_out": 0.5,
+  "music": {
+    "style": "upbeat",
+    "volume": 0.25,
+    "start": 0,
+    "end": 20,
+    "bpm": 115
+  },
+  "characters": [
+    {
+      "name": "bob",
+      "x": 0.3,
+      "ground": 0.86,
+      "scale": 1.0,
+      "color": "INK",
+      "facing": 1,
+      "visible": true
+    }
+  ],
+  "events": [
+    {
+      "type": "caption",
+      "start": 0,
+      "end": 2,
+      "text": "Want to make money online?",
+      "pos": "top",
+      "size": 48,
+      "color": "BLUE",
+      "typewriter": true
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 0.1,
+      "pose": "wave",
+      "dur": 0.35,
+      "ease": "back",
+      "face": "excited"
+    },
+    {
+      "type": "layer",
+      "char": "bob",
+      "start": 0.4,
+      "end": 1.7,
+      "layer": "wave"
+    },
+    {
+      "type": "effect",
+      "effect": "sparkles",
+      "start": 0.5,
+      "end": 1.7,
+      "x": 0.42,
+      "y": 0.42,
+      "count": 8,
+      "color": "GOLD"
+    },
+    {
+      "type": "caption",
+      "start": 2,
+      "end": 4,
+      "text": "Start with one useful skill.",
+      "pos": "top",
+      "size": 48,
+      "color": "BLUE"
+    },
+    {
+      "type": "move",
+      "char": "bob",
+      "start": 2,
+      "x": 0.48,
+      "y": 0.86,
+      "dur": 0.7,
+      "ease": "io"
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 2.8,
+      "pose": "think",
+      "dur": 0.3,
+      "face": "thinking"
+    },
+    {
+      "type": "prop",
+      "prop": "lightbulb",
+      "start": 2.7,
+      "end": 3.9,
+      "x": 0.64,
+      "y": 0.38,
+      "scale": 1.0,
+      "anim": "pop",
+      "on": true,
+      "color": "GOLD"
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 3.2,
+      "pose": "point_up",
+      "dur": 0.3,
+      "ease": "back",
+      "face": "excited"
+    },
+    {
+      "type": "caption",
+      "start": 4,
+      "end": 6,
+      "text": "Create something people really need.",
+      "pos": "top",
+      "size": 46,
+      "color": "BLUE"
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 4,
+      "pose": "type",
+      "dur": 0.35,
+      "face": "focused"
+    },
+    {
+      "type": "prop",
+      "prop": "laptop",
+      "start": 4,
+      "end": 6,
+      "x": 0.32,
+      "y": 0.72,
+      "scale": 1.1,
+      "anim": "pop",
+      "label": "Create",
+      "color": "BLUE"
+    },
+    {
+      "type": "layer",
+      "char": "bob",
+      "start": 4.5,
+      "end": 5.8,
+      "layer": "type"
+    },
+    {
+      "type": "effect",
+      "effect": "sparkles",
+      "start": 5,
+      "end": 5.9,
+      "x": 0.65,
+      "y": 0.53,
+      "count": 6,
+      "color": "GOLD"
+    },
+    {
+      "type": "caption",
+      "start": 6,
+      "end": 8,
+      "text": "Share your work with the world.",
+      "pos": "top",
+      "size": 46,
+      "color": "BLUE"
+    },
+    {
+      "type": "move",
+      "char": "bob",
+      "start": 6,
+      "x": 0.68,
+      "y": 0.86,
+      "dur": 0.7,
+      "ease": "io"
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 6.8,
+      "pose": "present",
+      "dur": 0.3,
+      "face": "happy"
+    },
+    {
+      "type": "prop",
+      "prop": "youtube_play",
+      "start": 6.5,
+      "end": 7.9,
+      "x": 0.3,
+      "y": 0.48,
+      "scale": 1.2,
+      "anim": "pop",
+      "subs": 0,
+      "color": "RED"
+    },
+    {
+      "type": "effect",
+      "effect": "likes_burst",
+      "start": 7,
+      "end": 7.9,
+      "x": 0.3,
+      "y": 0.4,
+      "count": 8,
+      "color": "PINK"
+    },
+    {
+      "type": "caption",
+      "start": 8,
+      "end": 10,
+      "text": "Offer a service or digital product.",
+      "pos": "top",
+      "size": 44,
+      "color": "BLUE"
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 8,
+      "pose": "explain",
+      "dur": 0.35,
+      "face": "confident"
+    },
+    {
+      "type": "prop",
+      "prop": "sign",
+      "start": 8,
+      "end": 9.9,
+      "x": 0.3,
+      "y": 0.57,
+      "scale": 1.0,
+      "anim": "grow",
+      "text": "My Services",
+      "color": "GREEN"
+    },
+    {
+      "type": "layer",
+      "char": "bob",
+      "start": 8.5,
+      "end": 9.8,
+      "layer": "talk"
+    },
+    {
+      "type": "caption",
+      "start": 10,
+      "end": 12,
+      "text": "Build trust, not overnight riches.",
+      "pos": "top",
+      "size": 46,
+      "color": "BLUE"
+    },
+    {
+      "type": "move",
+      "char": "bob",
+      "start": 10,
+      "x": 0.34,
+      "y": 0.86,
+      "dur": 0.7,
+      "ease": "io"
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 10.8,
+      "pose": "plan_board",
+      "dur": 0.35,
+      "face": "focused"
+    },
+    {
+      "type": "prop",
+      "prop": "checklist",
+      "start": 10.5,
+      "end": 11.9,
+      "x": 0.7,
+      "y": 0.51,
+      "scale": 1.0,
+      "anim": "pop",
+      "items": ["Learn", "Help", "Improve"],
+      "checked": 2,
+      "color": "GREEN"
+    },
+    {
+      "type": "caption",
+      "start": 12,
+      "end": 14,
+      "text": "First sale? Deliver real value.",
+      "pos": "top",
+      "size": 46,
+      "color": "GREEN"
+    },
+    {
+      "type": "move",
+      "char": "bob",
+      "start": 12,
+      "x": 0.55,
+      "y": 0.86,
+      "dur": 0.7,
+      "ease": "io"
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 12.8,
+      "pose": "shocked",
+      "dur": 0.25,
+      "face": "surprised"
+    },
+    {
+      "type": "prop",
+      "prop": "money_bag",
+      "start": 12.4,
+      "end": 13.8,
+      "x": 0.76,
+      "y": 0.55,
+      "scale": 1.1,
+      "anim": "pop"
+    },
+    {
+      "type": "effect",
+      "effect": "coins_burst",
+      "start": 12.8,
+      "end": 13.8,
+      "x": 0.75,
+      "y": 0.44,
+      "count": 10,
+      "color": "GOLD"
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 13.2,
+      "pose": "cheer",
+      "dur": 0.3,
+      "ease": "back",
+      "face": "very_happy"
+    },
+    {
+      "type": "caption",
+      "start": 14,
+      "end": 16,
+      "text": "Track your income and expenses.",
+      "pos": "top",
+      "size": 46,
+      "color": "BLUE"
+    },
+    {
+      "type": "move",
+      "char": "bob",
+      "start": 14,
+      "x": 0.7,
+      "y": 0.86,
+      "dur": 0.7,
+      "ease": "io"
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 14.8,
+      "pose": "present",
+      "dur": 0.3,
+      "face": "proud"
+    },
+    {
+      "type": "prop",
+      "prop": "chart",
+      "start": 14.5,
+      "end": 15.9,
+      "x": 0.29,
+      "y": 0.52,
+      "scale": 1.1,
+      "anim": "grow",
+      "bars": [0.25, 0.5, 0.8, 1.0],
+      "grow": true,
+      "color": "GREEN"
+    },
+    {
+      "type": "caption",
+      "start": 16,
+      "end": 18,
+      "text": "Improve, learn, and reinvest wisely.",
+      "pos": "top",
+      "size": 46,
+      "color": "BLUE"
+    },
+    {
+      "type": "move",
+      "char": "bob",
+      "start": 16,
+      "x": 0.48,
+      "y": 0.86,
+      "dur": 0.7,
+      "ease": "io"
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 16.8,
+      "pose": "point_up",
+      "dur": 0.3,
+      "ease": "back",
+      "face": "excited"
+    },
+    {
+      "type": "prop",
+      "prop": "rocket",
+      "start": 16.5,
+      "end": 17.9,
+      "x": 0.73,
+      "y": 0.45,
+      "scale": 1.1,
+      "anim": "float",
+      "flame": true,
+      "color": "ORANGE"
+    },
+    {
+      "type": "effect",
+      "effect": "speed_lines",
+      "start": 17,
+      "end": 17.9,
+      "x": 0.73,
+      "y": 0.4,
+      "count": 7,
+      "color": "LIGHT_BLUE"
+    },
+    {
+      "type": "caption",
+      "start": 18,
+      "end": 20,
+      "text": "Start small. Stay consistent. Grow.",
+      "pos": "top",
+      "size": 46,
+      "color": "GREEN"
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 18,
+      "pose": "jump_prep",
+      "dur": 0.2,
+      "face": "excited"
+    },
+    {
+      "type": "jump",
+      "char": "bob",
+      "start": 18.2,
+      "height": 0.3,
+      "dur": 0.55
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 18.35,
+      "pose": "cheer",
+      "dur": 0.3,
+      "ease": "back",
+      "face": "very_happy"
+    },
+    {
+      "type": "effect",
+      "effect": "confetti",
+      "start": 18.5,
+      "end": 20,
+      "x": 0.5,
+      "y": 0.38,
+      "count": 18,
+      "color": "GOLD"
+    },
+    {
+      "type": "prop",
+      "prop": "star",
+      "start": 18.6,
+      "end": 20,
+      "x": 0.72,
+      "y": 0.42,
+      "scale": 1.0,
+      "anim": "pulse",
+      "color": "GOLD"
+    },
+    {
+      "type": "layer",
+      "char": "bob",
+      "start": 19.1,
+      "end": 19.9,
+      "layer": "bounce"
+    }
+  ]
+}

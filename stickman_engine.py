@@ -455,6 +455,15 @@ POSES = {
     # --- seated / kneeling (use the sit / kneel fields) ---
     "sit":           _pose((0.30, 0.80), (0.30, 0.80), sit=1.0),
     "kneel":         _pose((0.30, 0.90), (0.30, 0.90), kneel=1.0, tilt=0.05),
+    # --- productivity / planning / education / youtube ---
+    "present_both":  _pose((1.35, 0.88), (1.35, 0.88), rh="open", lh="open", tilt=-0.04),
+    "plan_board":    _pose((2.15, 0.92), (-1.55, 0.35), rh="point", lh="fist", tilt=-0.06),
+    "film":          _pose((1.55, 0.78), (0.30, 0.90), rh="fist", tilt=-0.05),
+    "podcast":       _pose((1.15, 0.58), (-0.55, 0.55), rh="open", lh="open", lean=0.06),
+    "meditate":      _pose((-0.85, 0.55), (-0.85, 0.55), rh="peace", lh="peace", sit=0.8, crouch=0.2),
+    "juggle":        _pose((1.20, 0.65), (1.20, 0.65), rh="open", lh="open", crouch=0.06),
+    "graduate":      _pose((2.85, 0.98), (-0.65, 0.58), rh="open", lh="fist", crouch=-0.08),
+    "celebrate_jump": _pose((2.55, 0.99), (2.55, 0.99), rh="open", lh="open", liftr=0.85, crouch=-0.12),
 }
 
 # =============================================================== face library
@@ -489,10 +498,19 @@ FACES = {
     "disgusted":  _face(smile=-0.6, btilt=-0.6, lookx=0.6),
     "sleepy":     _face(smile=0.0, mopen=0.1, closed=1),
     "love":       _face(smile=1.0, mopen=0.2, brow=0.5, happy=1),
+    "confident":  _face(smile=0.75, brow=0.25, btilt=-0.15, eyes=0.9),
+    "determined": _face(smile=0.2, btilt=-0.6, brow=-0.2, eyes=0.95),
+    "calm":       _face(smile=0.45, brow=0.1, eyes=0.85),
+    "curious":    _face(smile=0.2, brow=0.6, btilt=0.35, eyes=1.15, lookx=0.3),
+    "serious":    _face(smile=-0.1, btilt=-0.4, brow=-0.15, eyes=0.9),
+    "tired":      _face(smile=-0.25, mopen=0.15, btilt=0.5, eyes=0.6),
+    "bored":      _face(smile=-0.15, brow=-0.1, eyes=0.65, lookx=0.4, looky=-0.2),
+    "embarrassed": _face(smile=0.4, btilt=0.6, brow=0.3, lookx=-0.4, looky=0.3),
+    "nervous":    _face(smile=-0.2, mopen=0.2, btilt=0.75, brow=0.4, eyes=1.2),
 }
 
 LAYER_KINDS = ["wave", "wave_l", "wave_both", "talk", "nod", "shake_head", "tremble", "bounce",
-               "clap", "type", "laugh", "look_around", "float", "breathe_hard"]
+               "clap", "type", "laugh", "look_around", "float", "breathe_hard", "write", "juggle"]
 
 
 # =============================================================== character
@@ -743,6 +761,10 @@ class Character:
         p["la"] += cl
         p["rr"] -= A("type") * 0.07 * max(0.0, math.sin(TT * 6))
         p["lr"] -= A("type") * 0.07 * max(0.0, math.sin(TT * 6 + math.pi))
+        p["ra"] += A("write") * 0.14 * math.sin(TT * 6.5) + A("juggle") * 0.34 * math.sin(TT * 3.2)
+        p["rr"] += A("write") * 0.05 * math.cos(TT * 8.5) + A("juggle") * 0.08 * math.cos(TT * 3.2)
+        p["la"] += A("juggle") * 0.34 * math.sin(TT * 3.2 + math.pi)
+        p["lr"] += A("juggle") * 0.08 * math.cos(TT * 3.2 + math.pi)
         p["crouch"] += (A("bounce") * 0.15 * (0.5 + 0.5 * math.sin(TT * 2))
                         + A("laugh") * 0.08 * abs(math.sin(TT * 4)) + cadd)
         p["tilt"] += A("bounce") * 0.08 * math.sin(TT) - A("laugh") * 0.05
@@ -981,14 +1003,15 @@ def prop_money_bill(cv, c, s, lt, ang=0.0):
 
 
 def prop_coin(cv, c, s, lt, flip=0.0):
-    sx = max(0.18, abs(math.cos(flip)))
+    ang = (lt * 6.0 if flip else 0.0) if isinstance(flip, bool) else float(flip)
+    sx = max(0.18, abs(math.cos(ang)))
     cv.ellipse(c, 18 * s * sx, 18 * s, 0, _w(s, 0.7), INK, GOLD, wob=0)
     if sx > 0.5:
         cv.text(c, "$", 22 * s, (150, 100, 0))
 
 
 def prop_coin_stack(cv, c, s, lt, n=5):
-    for i in range(n):
+    for i in range(int(n)):
         cv.ellipse(c + V(0, -i * 9 * s), 26 * s, 9 * s, 0, _w(s, 0.6), INK, GOLD, wob=0)
 
 
@@ -1084,6 +1107,7 @@ def prop_music_note(cv, c, s, lt):
 
 
 def prop_chart(cv, c, s, lt, bars=(0.25, 0.45, 0.4, 0.7, 1.0), grow=1.2, color=GREEN):
+    grow = (1.2 if grow else 0.001) if isinstance(grow, bool) else float(grow)
     w, h = 260 * s, 200 * s
     o = c + V(-w / 2, h / 2)
     cv.line(o, o + V(0, -h), _w(s))
@@ -1173,10 +1197,536 @@ def prop_book(cv, c, s, lt, color=BLUE, title=""):
         cv.text(c + V(0, 22 * s), title, 26 * s, color)
 
 
-PROPS.update(chair=prop_chair, book=prop_book)
+# --- productivity & focus ---
+def prop_checklist(cv, c, s, lt, items=4, checked=3, color=GREEN):
+    """Clipboard with task lines (or a list of item strings) that sequentially animate checkmarks."""
+    labels = [str(x) for x in items] if isinstance(items, (list, tuple)) else None
+    n = max(1, min(6, len(labels) if labels is not None else int(items)))
+    tw_max = max((cv.text_width(lb, 22 * s) for lb in labels[:n]), default=0.0) if labels else 0.0
+    w, h = max(155 * s, tw_max + 78 * s), 200 * s
+    cv.rect(c, w, h, 0, 12 * s, _w(s), INK, PAPER)
+    cv.rect(c + V(0, -h / 2), 64 * s, 22 * s, 0, 6 * s, _w(s, 0.85), INK, LIGHT_GRAY)
+    for i in range(n):
+        y = c[1] - h * 0.30 + i * (h * 0.68 / max(1, n - 1 if n > 1 else 1))
+        bx = c[0] - w / 2 + 26 * s
+        cv.rect(V(bx, y), 22 * s, 22 * s, 0, 4 * s, _w(s, 0.65), INK, PAPER)
+        if labels and i < len(labels):
+            cv.text(V(bx + 20 * s, y), labels[i], 22 * s, INK, anchor="lm")
+        else:
+            cv.line(V(bx + 22 * s, y), V(c[0] + w * 0.35, y), _w(s, 0.65), GRAY, wob=0.5)
+        is_chk = (bool(checked[i]) if i < len(checked) else False) if isinstance(checked, (list, tuple)) else (
+            checked if isinstance(checked, bool) else (i < int(checked)))
+        if is_chk:
+            u = ease_out(window(lt, 0.2 + i * 0.3, 0.45 + i * 0.3))
+            if u > 0.05:
+                p0, p1, p2 = V(bx - 6 * s, y), V(bx - 1 * s, y + 7 * s), V(bx + 12 * s, y - 9 * s)
+                if u < 0.45:
+                    cv.line(p0, lerp(p0, p1, u / 0.45), _w(s, 0.95), color, wob=0)
+                else:
+                    cv.line(p0, p1, _w(s, 0.95), color, wob=0)
+                    cv.line(p1, lerp(p1, p2, (u - 0.45) / 0.55), _w(s, 0.95), color, wob=0)
+
+
+def prop_hourglass(cv, c, s, lt, color=GOLD):
+    """Hourglass with draining top sand, falling stream, and filling bottom sand."""
+    w, h = 90 * s, 140 * s
+    u = clamp((lt % 3.5) / 3.0)
+    top_h = (1 - u) * (h * 0.38)
+    bot_h = u * (h * 0.40)
+    if top_h > 3 * s:
+        tw = w * 0.42 * (top_h / (h * 0.42))
+        cv.polygon([c + V(-tw, -top_h), c + V(tw, -top_h), c], 0, None, color)
+    if bot_h > 2 * s:
+        cv.polygon([c + V(-w * 0.44, h / 2 - 6 * s), c + V(w * 0.44, h / 2 - 6 * s),
+                    c + V(0, h / 2 - 6 * s - bot_h)], 0, None, color)
+    if u < 0.98:
+        cv.line(c, c + V(0, h / 2 - 6 * s), _w(s, 0.45), color, wob=0)
+    cv.polygon([c + V(-w / 2, -h / 2), c + V(w / 2, -h / 2), c], _w(s, 0.85), INK, None)
+    cv.polygon([c, c + V(w / 2, h / 2), c + V(-w / 2, h / 2)], _w(s, 0.85), INK, None)
+    for sy in (-1, 1):
+        cv.rect(c + V(0, sy * (h / 2 + 6 * s)), w * 1.18, 12 * s, 0, 3 * s, _w(s, 0.85), INK, (200, 160, 120))
+
+
+def prop_target(cv, c, s, lt, arrow=True, color=RED):
+    """Bullseye target board with an arrow that flies in and vibrates on impact."""
+    for r_k, fill in ((72, color), (50, PAPER), (28, color), (11, GOLD)):
+        cv.circle(c, r_k * s, _w(s, 0.75), INK, fill)
+    if arrow and lt > 0.1:
+        u = ease_out(window(lt, 0.1, 0.35))
+        vib = math.sin((lt - 0.35) * 42) * math.exp(-max(0.0, lt - 0.35) * 6) * 0.08 if lt > 0.35 else 0.0
+        d = rot(norm_v := V(0.78, -0.62), vib)
+        tip = lerp(c + norm_v * 140 * s, c, u)
+        tail = tip + d * 95 * s
+        cv.line(tail, tip, _w(s, 0.85), INK, wob=0)
+        for sx in (-1, 1):
+            cv.line(tip, tip + rot(d, sx * 0.45) * 18 * s, _w(s, 0.75), INK, wob=0)
+            cv.line(tail - d * 10 * s, tail + rot(d, sx * 0.55) * 16 * s, _w(s, 0.65), color, wob=0)
+
+
+def prop_rocket(cv, c, s, lt, flame=True, color=RED):
+    """Hovering/launching rocket with flickering exhaust flames."""
+    c = c + V(0, 6 * s * math.sin(lt * 8))
+    if flame:
+        fk = 1.0 + 0.28 * math.sin(lt * 32)
+        cv.polygon([c + V(-18 * s, 52 * s), c + V(0, (52 + 54 * fk) * s), c + V(18 * s, 52 * s)],
+                   _w(s, 0.6), INK, ORANGE)
+        cv.polygon([c + V(-10 * s, 52 * s), c + V(0, (52 + 32 * fk) * s), c + V(10 * s, 52 * s)],
+                   0, None, YELLOW)
+    for sx in (-1, 1):
+        cv.polygon([c + V(sx * 24 * s, 18 * s), c + V(sx * 52 * s, 56 * s), c + V(sx * 20 * s, 48 * s)],
+                   _w(s, 0.8), INK, color)
+    cv.curve([c + V(0, -82 * s), c + V(32 * s, -25 * s), c + V(24 * s, 50 * s),
+              c + V(-24 * s, 50 * s), c + V(-32 * s, -25 * s)], _w(s), INK, closed=True, fill=PAPER, wob=0.4)
+    cv.polygon([c + V(0, -82 * s), c + V(24 * s, -38 * s), c + V(-24 * s, -38 * s)], _w(s, 0.85), INK, color)
+    cv.circle(c + V(0, -6 * s), 16 * s, _w(s, 0.75), INK, LIGHT_BLUE)
+
+
+def prop_battery(cv, c, s, lt, level=1.0, charge=True, color=GREEN):
+    """Battery icon that charges up its bars over time."""
+    w, h = 140 * s, 74 * s
+    cv.rect(c + V(w / 2 + 7 * s, 0), 12 * s, 32 * s, 0, 3 * s, _w(s, 0.75), INK, GRAY)
+    cv.rect(c, w, h, 0, 10 * s, _w(s), INK, PAPER)
+    u = clamp(lerp(0.2, level, ease_out(window(lt, 0.1, 1.3))) if charge else level)
+    col = RED if u < 0.3 else (GOLD if u < 0.65 else color)
+    n_bars = 4
+    bw = (w - 28 * s) / n_bars
+    for i in range(n_bars):
+        if u >= (i + 0.3) / n_bars:
+            bx = c[0] - w / 2 + 14 * s + bw * (i + 0.5)
+            cv.rect(V(bx, c[1]), bw * 0.78, h - 22 * s, 0, 3 * s, _w(s, 0.5), INK, col)
+    if charge:
+        k = 1 + 0.12 * math.sin(lt * 10)
+        cv.polygon([c + V(4 * s * k, -22 * s * k), c + V(-10 * s * k, 2 * s * k), c + V(2 * s * k, 2 * s * k),
+                    c + V(-4 * s * k, 22 * s * k), c + V(10 * s * k, -2 * s * k), c + V(-2 * s * k, -2 * s * k)],
+                   _w(s, 0.55), INK, YELLOW)
+
+
+def prop_gear(cv, c, s, lt, color=GRAY):
+    """Two interlocking rotating gears (systems / automation / workflow)."""
+    def draw_cog(pos, r, teeth, ang, col):
+        pts = []
+        for i in range(teeth * 4):
+            a = ang + i * 2 * math.pi / (teeth * 4)
+            rr = r * (1.18 if (i % 4) in (1, 2) else 0.92)
+            pts.append(pos + V(math.cos(a) * rr, math.sin(a) * rr))
+        cv.polygon(pts, _w(s, 0.75), INK, col)
+        cv.circle(pos, r * 0.38, _w(s, 0.7), INK, PAPER)
+
+    draw_cog(c + V(-18 * s, -12 * s), 44 * s, 8, lt * 1.6, color)
+    draw_cog(c + V(42 * s, 30 * s), 28 * s, 6, -lt * 2.56 + 0.3, LIGHT_BLUE)
+
+
+def prop_alarm_clock(cv, c, s, lt, ring=True, color=RED):
+    """Twin-bell alarm clock that shakes and rings."""
+    ang = 0.12 * math.sin(lt * 36) if ring else 0.0
+    p = c + V(0, -4 * s * abs(math.sin(lt * 18)) if ring else 0)
+    r = 54 * s
+    for sx in (-1, 1):
+        cv.line(p + V(sx * 28 * s, r * 0.75), p + V(sx * 38 * s, r * 1.12), _w(s, 0.9))
+        bell = p + rot(V(sx * 42 * s, -44 * s), ang)
+        cv.circle(bell, 20 * s, _w(s, 0.8), INK, color)
+        if ring:
+            for k in (1, 2):
+                d = V(sx, -0.8)
+                cv.curve([bell + d * (18 + k * 9) * s + V(-8 * s, 6 * s),
+                          bell + d * (22 + k * 9) * s,
+                          bell + d * (18 + k * 9) * s + V(8 * s, -6 * s)], _w(s, 0.55), color, wob=0)
+    cv.circle(p, r, _w(s), INK, PAPER)
+    cv.line(p, p + rot(V(0, -r * 0.68), lt * 5), _w(s, 0.7), wob=0)
+    cv.line(p, p + rot(V(0, -r * 0.45), 1.2 + lt * 0.5), _w(s, 0.9), wob=0)
+    cv.dot(p, 5 * s)
+
+
+# --- making money & finance ---
+def prop_piggy_bank(cv, c, s, lt, coin_drop=True, color=PINK):
+    """Piggy bank with a gold coin periodically dropping into the top slot."""
+    u = (lt % 1.2) / 0.55
+    sq = 1.0 - (0.08 * math.sin(math.pi * (u - 1) / 0.35) if 1.0 <= u <= 1.35 and coin_drop else 0.0)
+    if coin_drop and u < 1.0:
+        prop_coin(cv, c + V(-4 * s, lerp(-95 * s, -36 * s, ease_in(u))), 0.85 * s, lt, flip=lt * 6)
+    for lx in (-34, -14, 16, 36):
+        cv.rect(c + V(lx * s, 44 * s), 14 * s, 26 * s, 0, 3 * s, _w(s, 0.75), INK, color)
+    cv.curve([c + V(-64 * s, -6 * s), c + V(-84 * s, -18 * s), c + V(-74 * s, -30 * s), c + V(-88 * s, -38 * s)],
+             _w(s, 0.7), INK, wob=0)
+    cv.ellipse(c, 66 * s * (2 - sq), 48 * s * sq, 0, _w(s), INK, color)
+    cv.rect(c + V(66 * s, 4 * s), 22 * s, 28 * s, 0, 6 * s, _w(s, 0.8), INK, color)
+    cv.polygon([c + V(12 * s, -40 * s), c + V(28 * s, -66 * s), c + V(38 * s, -34 * s)], _w(s, 0.8), INK, color)
+    cv.line(c + V(-18 * s, -44 * s * sq), c + V(6 * s, -44 * s * sq), _w(s, 1.1), INK, wob=0)
+    cv.dot(c + V(38 * s, -12 * s), 4.5 * s)
+
+
+def prop_credit_card(cv, c, s, lt, label="CARD", color=LIGHT_BLUE):
+    """Floating credit/debit card with gold EMV chip and stripe."""
+    ang = 0.06 * math.sin(lt * 2.5)
+    p = c + V(0, 5 * s * math.sin(lt * 3))
+    w, h = 175 * s, 110 * s
+    cv.rect(p, w, h, ang, 12 * s, _w(s), INK, color)
+    cv.rect(p + rot(V(0, -26 * s), ang), w * 0.96, 20 * s, ang, 0, _w(s, 0.5), INK, INK)
+    cv.rect(p + rot(V(-50 * s, 6 * s), ang), 28 * s, 22 * s, ang, 4 * s, _w(s, 0.65), INK, GOLD)
+    cv.line(p + rot(V(-64 * s, 32 * s), ang), p + rot(V(20 * s, 32 * s), ang), _w(s, 0.65), INK, wob=0)
+    if label:
+        cv.text(p + rot(V(45 * s, 28 * s), ang), label, 24 * s, INK)
+
+
+def prop_pie_chart(cv, c, s, lt, slices=(0.45, 0.30, 0.25), grow=1.0):
+    """Animated circular pie chart whose wedges sweep open."""
+    grow = (1.0 if grow else 0.001) if isinstance(grow, bool) else float(grow)
+    r = 78 * s
+    cols = [GREEN, BLUE, GOLD, ORANGE, PURPLE, PINK]
+    u = ease_out(window(lt, 0, grow))
+    tot = sum(slices) or 1.0
+    a0 = -math.pi / 2
+    for i, sl in enumerate(slices):
+        span = (sl / tot) * 2 * math.pi * u
+        if span > 0.02:
+            a1 = a0 + span
+            mid = (a0 + a1) / 2
+            off = V(math.cos(mid), math.sin(mid)) * (8 * s if i == 0 and u > 0.9 else 0.0)
+            pts = [c + off] + [c + off + V(math.cos(a) * r, math.sin(a) * r) for a in np.linspace(a0, a1, 18)]
+            cv.polygon(pts, _w(s, 0.8), INK, cols[i % len(cols)])
+        a0 += span
+
+
+def prop_line_chart(cv, c, s, lt, points=(0.15, 0.35, 0.28, 0.65, 0.55, 0.95), grow=1.2, color=GREEN):
+    """Stock/growth line chart that draws itself left-to-right with data nodes."""
+    grow = (1.2 if grow else 0.001) if isinstance(grow, bool) else float(grow)
+    w, h = 260 * s, 190 * s
+    o = c + V(-w / 2, h / 2)
+    for k in (0.33, 0.66, 1.0):
+        cv.line(o + V(0, -h * k), o + V(w, -h * k), _w(s, 0.35), GRID, wob=0)
+    cv.line(o, o + V(0, -h), _w(s))
+    cv.line(o, o + V(w, 0), _w(s))
+    n = len(points)
+    if n < 2:
+        return
+    pts = [o + V((i / (n - 1)) * (w - 20 * s) + 10 * s, -p * (h - 24 * s) - 8 * s) for i, p in enumerate(points)]
+    u = ease_out(window(lt, 0, grow))
+    pos = u * (n - 1)
+    idx = min(n - 2, int(pos))
+    frac = pos - idx
+    drawn = pts[:idx + 1] + ([lerp(pts[idx], pts[idx + 1], frac)] if u > 0 else [])
+    if len(drawn) >= 2:
+        cv.stroke(drawn, _w(s, 1.15), color, wob=0.5)
+    for i in range(idx + 1):
+        cv.circle(pts[i], 6.5 * s, _w(s, 0.6), INK, PAPER, wob=0)
+
+
+def prop_safe(cv, c, s, lt, open_at=0.6, color=GRAY):
+    """Bank safe whose dial spins before the door swings open to reveal gold inside."""
+    open_at = (0.6 if open_at else 999.0) if isinstance(open_at, bool) else float(open_at)
+    w, h = 140 * s, 140 * s
+    for sx in (-1, 1):
+        cv.rect(c + V(sx * 46 * s, h / 2 + 8 * s), 22 * s, 14 * s, 0, 2 * s, _w(s, 0.8), INK, INK)
+    cv.rect(c, w, h, 0, 10 * s, _w(s), INK, color)
+    u = ease_back(window(lt, open_at, open_at + 0.45))
+    if u > 0.05:
+        cv.rect(c, w * 0.78, h * 0.78, 0, 4 * s, _w(s, 0.7), INK, (50, 55, 65))
+        prop_coin_stack(cv, c + V(-18 * s, 28 * s), 0.75 * s, lt, n=4)
+        prop_money_bill(cv, c + V(12 * s, 16 * s), 0.55 * s, lt, ang=-0.15)
+        dw = w * 0.78 * max(0.18, 1 - 0.7 * u)
+        cv.rect(c + V(w * 0.39 + dw / 2, 0), dw, h * 0.82, 0, 6 * s, _w(s, 0.85), INK, color)
+    else:
+        cv.rect(c, w * 0.78, h * 0.78, 0, 6 * s, _w(s, 0.75), INK, color)
+        dial = c + V(8 * s, 0)
+        cv.circle(dial, 22 * s, _w(s, 0.75), INK, LIGHT_GRAY)
+        for j in range(3):
+            a = lt * 8 + j * 2 * math.pi / 3
+            cv.line(dial, dial + V(math.cos(a), math.sin(a)) * 18 * s, _w(s, 0.65), INK, wob=0)
+
+
+def prop_diamond(cv, c, s, lt, color=LIGHT_BLUE):
+    """Faceted gemstone with animated sparkle glints."""
+    p = c + V(0, 4 * s * math.sin(lt * 3.5))
+    top_l, top_r = p + V(-34 * s, -42 * s), p + V(34 * s, -42 * s)
+    mid_l, mid_r = p + V(-60 * s, -12 * s), p + V(60 * s, -12 * s)
+    bot = p + V(0, 56 * s)
+    cv.polygon([top_l, top_r, mid_r, bot, mid_l], _w(s), INK, color)
+    cv.line(mid_l, mid_r, _w(s, 0.65), INK, wob=0)
+    for xk in (-18, 18):
+        cv.line(p + V(xk * s, -42 * s), p + V(xk * 1.4 * s, -12 * s), _w(s, 0.55), INK, wob=0)
+        cv.line(p + V(xk * 1.4 * s, -12 * s), bot, _w(s, 0.55), INK, wob=0)
+    for i, off in enumerate((V(-58, -42), V(62, -32), V(0, -64))):
+        k = max(0.0, math.sin(lt * 5 + i * 2.1))
+        if k > 0.2:
+            cv.star(p + off * s, 14 * s * k, 4, 0, _w(s, 0.45), INK, YELLOW)
+
+
+def prop_magnet(cv, c, s, lt, coins=True, color=RED):
+    """Horseshoe magnet emitting attraction waves and pulling in coins."""
+    p = c + V(2 * s * math.sin(lt * 16), 0)
+    r, arm = 42 * s, 45 * s
+    pts_out = [p + V(-arm, -r)] + [p + V(-arm + math.cos(a) * r, math.sin(a) * r)
+                                   for a in np.linspace(math.pi / 2, 3 * math.pi / 2, 14)] + [p + V(0, -r)]
+    cv.stroke(pts_out, _w(s, 2.2), color, wob=0.5)
+    for sy in (-1, 1):
+        cv.rect(p + V(-6 * s, sy * (r - 12 * s)), 24 * s, 20 * s, 0, 2 * s, _w(s, 0.7), INK, LIGHT_GRAY)
+        cv.rect(p + V(-32 * s, sy * (r - 12 * s)), 30 * s, 20 * s, 0, 2 * s, _w(s, 0.7), INK, color)
+    for i in range(2):
+        u = ((lt * 1.6 + i * 0.5) % 1.0)
+        x = 22 * s + (1 - u) * 55 * s
+        cv.curve([p + V(x, -26 * s), p + V(x + 12 * s, 0), p + V(x, 26 * s)], _w(s, 0.5), BLUE, wob=0)
+        if coins:
+            prop_coin(cv, p + V(x + 18 * s, (i * 2 - 1) * 20 * s * u), 0.7 * s, lt, flip=lt * 5 + i)
+
+
+# --- planning & strategy ---
+def prop_calendar(cv, c, s, lt, day="15", mark=True, color=RED):
+    """Calendar page with date grid and an animated circle/check around the target day."""
+    w, h = 160 * s, 175 * s
+    cv.rect(c, w, h, 0, 10 * s, _w(s), INK, PAPER)
+    cv.rect(c + V(0, -h / 2 + 24 * s), w, 48 * s, 0, 8 * s, _w(s), INK, color)
+    for sx in (-1, 1):
+        cv.rect(c + V(sx * 44 * s, -h / 2 - 4 * s), 12 * s, 26 * s, 0, 4 * s, _w(s, 0.75), INK, LIGHT_GRAY)
+    for row in range(3):
+        for col in range(4):
+            cell = c + V((col - 1.5) * 34 * s, (-0.1 + row * 0.32) * h * 0.78)
+            cv.rect(cell, 22 * s, 20 * s, 0, 2 * s, _w(s, 0.45), GRAY, LIGHT_GRAY)
+    target = c + V(0.5 * 34 * s, 0.22 * h * 0.78)
+    if day:
+        cv.text(c + V(0, -h / 2 + 24 * s), str(day), 30 * s, PAPER)
+    if mark and lt > 0.25:
+        u = ease_out(window(lt, 0.25, 0.65))
+        pts = ellipse_pts(target, 20 * s, 18 * s, n=28)[:max(2, int(28 * u))]
+        cv.stroke(pts, _w(s, 0.95), color, wob=0.6)
+
+
+def prop_roadmap(cv, c, s, lt, steps=4, color=GREEN):
+    """Winding S-curve roadmap with milestone pins popping in along the path."""
+    w, h = 250 * s, 170 * s
+    ctrl = [c + V(-w * 0.42, h * 0.38), c + V(w * 0.32, h * 0.15),
+            c + V(-w * 0.28, -h * 0.15), c + V(w * 0.38, -h * 0.38)]
+    path = catmull(ctrl, 16)
+    cv.stroke(path, _w(s, 1.8), LIGHT_GRAY, wob=0.5)
+    u = ease_out(window(lt, 0.0, 1.2))
+    k_end = max(2, int(len(path) * u))
+    cv.stroke(path[:k_end], _w(s, 1.1), color, wob=0.5)
+    labels = [str(x) for x in steps] if isinstance(steps, (list, tuple)) else None
+    n = max(2, min(5, len(labels) if labels is not None else int(steps)))
+    for i in range(n):
+        idx = int(i * (len(path) - 1) / (n - 1))
+        if k_end >= idx + 1:
+            p = path[idx]
+            cv.circle(p, 10 * s, _w(s, 0.7), INK, GOLD if i == n - 1 else PAPER)
+            if labels and i < len(labels):
+                cv.text(p + V(0, 22 * s), labels[i], 20 * s, INK)
+            if i == n - 1:
+                cv.line(p, p + V(0, -34 * s), _w(s, 0.75))
+                cv.polygon([p + V(0, -34 * s), p + V(24 * s, -25 * s), p + V(0, -16 * s)], _w(s, 0.65), INK, RED)
+
+
+def prop_whiteboard(cv, c, s, lt, title="PLAN", color=PAPER):
+    """Framed whiteboard where a 3-step flowchart draws itself in."""
+    w, h = 270 * s, 180 * s
+    cv.rect(c, w + 14 * s, h + 14 * s, 0, 8 * s, _w(s), INK, LIGHT_GRAY)
+    cv.rect(c, w, h, 0, 4 * s, _w(s, 0.8), INK, color)
+    if title:
+        cv.text(c + V(0, -h * 0.34), title, 34 * s, INK)
+    b1, b2, b3 = c + V(-82 * s, 18 * s), c + V(0, 18 * s), c + V(82 * s, 18 * s)
+    if lt > 0.15:
+        cv.rect(b1, 52 * s, 42 * s, 0, 6 * s, _w(s, 0.7), INK, LIGHT_BLUE)
+    if lt > 0.45:
+        cv.arrow(b1 + V(28 * s, 0), b2 + V(-28 * s, 0), _w(s, 0.7), INK, head=12 * s, wob=0)
+        cv.rect(b2, 52 * s, 42 * s, 0, 6 * s, _w(s, 0.7), INK, YELLOW)
+    if lt > 0.75:
+        cv.arrow(b2 + V(28 * s, 0), b3 + V(-28 * s, 0), _w(s, 0.7), INK, head=12 * s, wob=0)
+        cv.star(b3, 26 * s, 5, 0, _w(s, 0.7), INK, GREEN)
+
+
+def prop_compass(cv, c, s, lt, color=GOLD):
+    """Compass with a swinging magnetic needle that settles on target."""
+    r = 62 * s
+    cv.circle(c, r, _w(s), INK, color)
+    cv.circle(c, r * 0.82, _w(s, 0.75), INK, PAPER)
+    for a in (0, math.pi / 2, math.pi, 3 * math.pi / 2):
+        d = V(math.cos(a), math.sin(a))
+        cv.line(c + d * r * 0.64, c + d * r * 0.80, _w(s, 0.65), INK, wob=0)
+    ang = -0.6 + 0.95 * math.cos(lt * 5.5) * math.exp(-lt * 1.4)
+    d = V(math.cos(ang), math.sin(ang))
+    p = V(-d[1], d[0])
+    cv.polygon([c + d * r * 0.65, c + p * 9 * s, c - p * 9 * s], _w(s, 0.65), INK, RED)
+    cv.polygon([c - d * r * 0.65, c + p * 9 * s, c - p * 9 * s], _w(s, 0.65), INK, GRAY)
+    cv.dot(c, 5 * s, INK)
+
+
+# --- education & ideas ---
+def prop_graduation_cap(cv, c, s, lt, color=INK):
+    """Mortarboard graduation cap with a swinging gold tassel."""
+    w, h = 88 * s, 32 * s
+    cv.polygon([c + V(-w * 0.55, 4 * s), c + V(w * 0.55, 4 * s),
+                c + V(w * 0.48, 32 * s), c + V(-w * 0.48, 32 * s)], _w(s, 0.85), INK, color)
+    cv.polygon([c + V(0, -h), c + V(w, 0), c + V(0, h), c + V(-w, 0)], _w(s), INK, color)
+    sway = 10 * s * math.sin(lt * 4.5)
+    t_top = c + V(w * 0.55, 6 * s)
+    t_bot = t_top + V(sway, 36 * s)
+    cv.curve([c, t_top, t_bot], _w(s, 0.75), GOLD, wob=0)
+    cv.dot(c, 6 * s, GOLD)
+    cv.circle(t_bot, 6 * s, _w(s, 0.5), INK, GOLD)
+
+
+def prop_brain(cv, c, s, lt, glow=True, color=PINK):
+    """Hand-drawn brain with pulsing neural spark lines."""
+    blobs = [(-32, -16, 28), (0, -24, 30), (32, -16, 28), (-38, 12, 26), (38, 12, 26), (-14, 22, 28), (16, 22, 28)]
+    for x, y, r in blobs:
+        cv.circle(c + V(x * s, y * s), r * s, _w(s, 0.85), INK, color, wob=0.5)
+    for x, y, r in blobs:
+        cv.circle(c + V(x * s, y * s), r * s - _w(s, 0.8), 0, None, color, wob=0.4)
+    cv.curve([c + V(-28 * s, -8 * s), c + V(-6 * s, -2 * s), c + V(-18 * s, 14 * s)], _w(s, 0.6), INK)
+    cv.curve([c + V(26 * s, -10 * s), c + V(8 * s, 2 * s), c + V(22 * s, 16 * s)], _w(s, 0.6), INK)
+    if glow:
+        for j in range(6):
+            a = j * math.pi / 3 + 0.3
+            k = 0.5 + 0.5 * math.sin(lt * 9 + j * 1.7)
+            d = V(math.cos(a), math.sin(a))
+            cv.line(c + d * 70 * s, c + d * (78 + 18 * k) * s, _w(s, 0.65), GOLD, wob=0)
+
+
+def prop_certificate(cv, c, s, lt, label="A+", color=GOLD):
+    """Framed diploma/certificate with a gleaming ribbon seal."""
+    w, h = 180 * s, 130 * s
+    cv.rect(c, w, h, 0, 8 * s, _w(s), INK, PAPER)
+    cv.rect(c, w - 20 * s, h - 20 * s, 0, 4 * s, _w(s, 0.5), color, None)
+    if label:
+        cv.text(c + V(-18 * s, -22 * s), label, 42 * s, INK)
+    cv.line(c + V(-62 * s, 12 * s), c + V(12 * s, 12 * s), _w(s, 0.6), GRAY, wob=0.4)
+    cv.line(c + V(-62 * s, 30 * s), c + V(-4 * s, 30 * s), _w(s, 0.6), GRAY, wob=0.4)
+    seal = c + V(46 * s, 22 * s)
+    for sx in (-1, 1):
+        cv.polygon([seal, seal + V(sx * 16 * s, 38 * s), seal + V(sx * 4 * s, 32 * s)], _w(s, 0.6), INK, RED)
+    cv.star(seal, 22 * s * (1 + 0.08 * math.sin(lt * 6)), 8, lt * 0.8, _w(s, 0.65), INK, color)
+
+
+def prop_globe(cv, c, s, lt, color=LIGHT_BLUE):
+    """Rotating Earth globe on a desk stand."""
+    r = 56 * s
+    cv.circle(c, r, _w(s), INK, color)
+    shift = ((lt * 0.45) % 1.0) * 2 - 1
+    cv.ellipse(c + V(shift * 22 * s, -12 * s), 22 * s * (1 - 0.4 * abs(shift)), 16 * s, 0.2,
+               _w(s, 0.55), INK, LIGHT_GREEN)
+    cv.ellipse(c + V(-shift * 20 * s, 16 * s), 18 * s * (1 - 0.4 * abs(shift)), 14 * s, -0.3,
+               _w(s, 0.55), INK, LIGHT_GREEN)
+    cv.line(c + V(-r, 0), c + V(r, 0), _w(s, 0.5), INK, wob=0)
+    Arc = [c + V(math.cos(a) * (r + 12 * s), math.sin(a) * (r + 12 * s))
+           for a in np.linspace(-math.pi * 0.6, math.pi * 0.6, 18)]
+    cv.stroke(Arc, _w(s, 0.9), GRAY, wob=0.3)
+    cv.line(c + V(0, r + 12 * s), c + V(0, r + 34 * s), _w(s))
+    cv.rect(c + V(0, r + 38 * s), 76 * s, 12 * s, 0, 4 * s, _w(s, 0.85), INK, GRAY)
+
+
+# --- YouTube & content creation ---
+def prop_youtube_play(cv, c, s, lt, subs="", color=RED):
+    """YouTube Play button plaque with subtle pulse and optional subscriber count."""
+    k = 1.0 + 0.04 * math.sin(lt * 5)
+    w, h = 168 * s * k, 116 * s * k
+    cv.rect(c, w, h, 0, 26 * s * k, _w(s), INK, color)
+    tri = [c + V(-20 * s * k, -26 * s * k), c + V(28 * s * k, 0), c + V(-20 * s * k, 26 * s * k)]
+    cv.polygon(tri, _w(s, 0.85), INK, PAPER)
+    if subs:
+        cv.rect(c + V(0, h / 2 + 28 * s), 140 * s, 36 * s, 0, 8 * s, _w(s, 0.7), INK, GOLD)
+        cv.text(c + V(0, h / 2 + 28 * s), str(subs), 26 * s, INK)
+
+
+def prop_subscribe_btn(cv, c, s, lt, clicked_at=0.6, text="SUBSCRIBE"):
+    """YouTube Subscribe button + bell that animates a click and turns Subscribed."""
+    clicked_at = (0.6 if clicked_at else 999.0) if isinstance(clicked_at, bool) else float(clicked_at)
+    clicked = lt >= clicked_at
+    squash = 1.0 - (0.14 * math.sin(math.pi * (lt - clicked_at) / 0.18) if 0 <= lt - clicked_at < 0.18 else 0.0)
+    w, h = 210 * s * squash, 68 * s * squash
+    cv.rect(c, w, h, 0, 14 * s, _w(s), INK, LIGHT_GRAY if clicked else RED)
+    cv.text(c, "SUBSCRIBED" if clicked else text, 30 * s * squash, INK if clicked else PAPER)
+    bell = c + V(w / 2 + 36 * s, 0)
+    ang = 0.22 * math.sin((lt - clicked_at) * 30) * math.exp(-max(0.0, lt - clicked_at) * 2.5) if clicked else 0.0
+    cv.polygon([bell + rot(V(-16 * s, 14 * s), ang), bell + rot(V(-12 * s, -12 * s), ang),
+                bell + rot(V(0, -20 * s), ang), bell + rot(V(12 * s, -12 * s), ang),
+                bell + rot(V(16 * s, 14 * s), ang)], _w(s, 0.75), INK, GOLD if clicked else PAPER)
+    cv.dot(bell + V(0, 18 * s), 5 * s, INK)
+    if clicked and lt - clicked_at < 0.55:
+        u = (lt - clicked_at) / 0.55
+        for j in range(6):
+            d = rot(V(1, 0), j * math.pi / 3)
+            cv.line(bell + d * (22 + 12 * u) * s, bell + d * (32 + 20 * u) * s, _w(s, 0.6), GOLD, wob=0)
+
+
+def prop_camera_rec(cv, c, s, lt, rec=True):
+    """Video camera on a tripod with a blinking red REC indicator."""
+    for sx in (-0.7, 0.0, 0.7):
+        cv.line(c + V(0, 32 * s), c + V(sx * 54 * s, 105 * s), _w(s, 0.85))
+    cv.rect(c, 108 * s, 68 * s, 0, 10 * s, _w(s), INK, (70, 75, 85))
+    cv.polygon([c + V(54 * s, -14 * s), c + V(90 * s, -28 * s), c + V(90 * s, 28 * s), c + V(54 * s, 14 * s)],
+               _w(s, 0.85), INK, LIGHT_GRAY)
+    cv.circle(c + V(-12 * s, 0), 18 * s, _w(s, 0.7), INK, LIGHT_BLUE)
+    if rec and math.sin(lt * 8) > -0.2:
+        cv.dot(c + V(-34 * s, -20 * s), 7 * s, RED)
+        cv.text(c + V(16 * s, -20 * s), "REC", 20 * s, RED)
+
+
+def prop_microphone(cv, c, s, lt, waves=True, color=GRAY):
+    """Studio podcast/YouTube microphone with radiating sound waves."""
+    head = c + V(0, -24 * s)
+    cv.ellipse(head, 24 * s, 34 * s, 0, _w(s), INK, color)
+    for yk in (-12, 0, 12):
+        cv.line(head + V(-18 * s, yk * s), head + V(18 * s, yk * s), _w(s, 0.5), INK, wob=0)
+    cv.curve([head + V(-32 * s, -4 * s), head + V(-30 * s, 40 * s), head + V(0, 46 * s),
+              head + V(30 * s, 40 * s), head + V(32 * s, -4 * s)], _w(s, 0.85), INK, wob=0)
+    cv.line(c + V(0, 22 * s), c + V(0, 62 * s), _w(s))
+    cv.rect(c + V(0, 66 * s), 68 * s, 12 * s, 0, 4 * s, _w(s, 0.85), INK, INK)
+    if waves:
+        for sx in (-1, 1):
+            for k in (1, 2):
+                u = ((lt * 1.8 + k * 0.4) % 1.0)
+                rx = (38 + u * 28) * s * sx
+                cv.curve([head + V(rx, -20 * s), head + V(rx + sx * 10 * s, 0), head + V(rx, 20 * s)],
+                         _w(s, 0.55 * (1 - 0.5 * u)), BLUE, wob=0)
+
+
+def prop_video_player(cv, c, s, lt, progress=0.85, likes=True, color=RED):
+    """YouTube video player window with advancing red scrub bar and floating likes."""
+    w, h = 270 * s, 168 * s
+    cv.rect(c, w, h, 0, 12 * s, _w(s), INK, PAPER)
+    cv.rect(c + V(0, -12 * s), w - 24 * s, h - 48 * s, 0, 6 * s, _w(s, 0.7), INK, LIGHT_GRAY)
+    cv.polygon([c + V(-14 * s, -28 * s), c + V(22 * s, -12 * s), c + V(-14 * s, 4 * s)], _w(s, 0.75), INK, color)
+    y_bar = c[1] + h / 2 - 22 * s
+    x0, x1 = c[0] - w / 2 + 18 * s, c[0] + w / 2 - 18 * s
+    u = clamp(lerp(0.08, progress, ease_out(window(lt, 0, 1.5))))
+    xm = lerp(x0, x1, u)
+    cv.line(V(x0, y_bar), V(x1, y_bar), _w(s, 0.7), GRAY, wob=0)
+    cv.line(V(x0, y_bar), V(xm, y_bar), _w(s, 0.95), color, wob=0)
+    cv.dot(V(xm, y_bar), 7 * s, color)
+    if likes:
+        for i in range(3):
+            a = ((lt * 0.9 + i / 3) % 1.0)
+            p = c + V(w * 0.36 + 10 * s * math.sin(a * 5 + i), h * 0.25 - a * 90 * s)
+            cv.heart(p, 14 * s * (1 - 0.4 * a), _w(s, 0.45), INK, PINK if i % 2 == 0 else RED)
+
+
+def prop_megaphone(cv, c, s, lt, waves=True, color=ORANGE):
+    """Megaphone / bullhorn with animated sound burst lines."""
+    k = 1.0 + 0.04 * math.sin(lt * 10)
+    cv.rect(c + V(-26 * s, 26 * s), 14 * s, 34 * s, 0.3, 3 * s, _w(s, 0.8), INK, GRAY)
+    cv.polygon([c + V(-42 * s, 8 * s), c + V(46 * s * k, -38 * s * k),
+                c + V(46 * s * k, 28 * s * k), c + V(-42 * s, -8 * s)], _w(s), INK, color)
+    cv.ellipse(c + V(46 * s * k, -5 * s * k), 10 * s, 33 * s * k, 0, _w(s, 0.8), INK, PAPER)
+    if waves:
+        for j, a in enumerate((-0.35, 0.0, 0.35)):
+            d = rot(V(1, -0.08), a)
+            u = 0.5 + 0.5 * math.sin(lt * 12 + j)
+            cv.line(c + V(58 * s, -5 * s) + d * 10 * s, c + V(58 * s, -5 * s) + d * (28 + 18 * u) * s,
+                    _w(s, 0.75), color, wob=0)
+
+
+PROPS.update(
+    chair=prop_chair, book=prop_book,
+    checklist=prop_checklist, hourglass=prop_hourglass, target=prop_target, rocket=prop_rocket,
+    battery=prop_battery, gear=prop_gear, alarm_clock=prop_alarm_clock,
+    piggy_bank=prop_piggy_bank, credit_card=prop_credit_card, pie_chart=prop_pie_chart,
+    line_chart=prop_line_chart, safe=prop_safe, diamond=prop_diamond, magnet=prop_magnet,
+    calendar=prop_calendar, roadmap=prop_roadmap, whiteboard=prop_whiteboard, compass=prop_compass,
+    graduation_cap=prop_graduation_cap, brain=prop_brain, certificate=prop_certificate, globe=prop_globe,
+    youtube_play=prop_youtube_play, subscribe_btn=prop_subscribe_btn, camera_rec=prop_camera_rec,
+    microphone=prop_microphone, video_player=prop_video_player, megaphone=prop_megaphone,
+)
 
 EFFECT_KINDS = ["money_rain", "confetti", "coins_burst", "burst", "sparkles", "hearts", "speed_lines",
-                "smoke", "shake", "flash"]
+                "smoke", "shake", "flash", "likes_burst", "fireworks"]
 CONFETTI_COLORS = [RED, BLUE, GOLD, GREEN, PINK, PURPLE, ORANGE]
 
 
@@ -1463,10 +2013,18 @@ PROP_SFX = {"lightbulb": "ding", "money_bill": "swish", "coin": "coin", "coin_st
             "money_bag": "cha_ching", "phone": "notify", "trophy": "success", "heart": "heart",
             "star": "sparkle", "question": "question", "exclamation": "alert", "sweat": "blip",
             "zzz": "snore", "anger": "thud", "music_note": "chime", "chart": "rise", "clock": "tick",
-            "sun": "chime", "cloud": "whoosh", "book": "swish"}
+            "sun": "chime", "cloud": "whoosh", "book": "swish",
+            "checklist": "ding", "hourglass": "tick", "target": "impact", "rocket": "whoosh",
+            "battery": "zap", "gear": "tick", "alarm_clock": "alert",
+            "piggy_bank": "coin", "credit_card": "swish", "pie_chart": "pop", "line_chart": "rise",
+            "safe": "cha_ching", "diamond": "sparkle", "magnet": "coins",
+            "calendar": "pop", "roadmap": "rise", "whiteboard": "swish", "compass": "chime",
+            "graduation_cap": "success", "brain": "magic", "certificate": "success", "globe": "chime",
+            "youtube_play": "notify", "subscribe_btn": "ding", "camera_rec": "notify",
+            "microphone": "pop", "video_player": "notify", "megaphone": "alert"}
 EFFECT_SFX = {"money_rain": "cha_ching", "confetti": "party", "coins_burst": "coins", "burst": "impact",
               "sparkles": "sparkle", "hearts": "heart", "speed_lines": "whoosh", "smoke": "poof",
-              "shake": "rumble", "flash": "zap"}
+              "shake": "rumble", "flash": "zap", "likes_burst": "notify", "fireworks": "party"}
 
 
 def get_sound(name, **kw):
@@ -1684,7 +2242,7 @@ class Scene:
     def prop(self, name, t0, t1, x=0.5, y=0.5, at=None, anchor="above_head", offset=(0.0, 0.0),
              scale=1.0, anim="pop", z=5, sfx=None, volume=1.0, **kw):
         """Show a prop. Position: normalized x,y OR attached to character `at` + anchor.
-        anim: 'pop' | 'drop' | 'grow' | 'slide_left' | 'slide_right' | 'float' | 'none'.
+        anim: 'pop' | 'drop' | 'grow' | 'slide_left' | 'slide_right' | 'float' | 'bounce' | 'pulse' | 'none'.
         sfx: None = automatic appear sound, False = silent, or a SOUNDS name."""
         if name not in PROPS:
             raise ValueError(f"Unknown prop '{name}'. Available: {sorted(PROPS)}")
@@ -1706,6 +2264,11 @@ class Scene:
                 c = c + V(sgn * (1 - ease_back(window(t, t0, t0 + 0.5))) * 1200, 0)
             elif anim == "float":
                 c = c + V(0, 8 * math.sin(lt * 2.5))
+            elif anim == "bounce":
+                s *= pop_scale(t, t0, t1)
+                c = c - V(0, abs(math.sin(lt * 4.5)) * 24)
+            elif anim == "pulse":
+                s *= pop_scale(t, t0, t1) * (1.0 + 0.08 * math.sin(lt * 6.0))
             if s > 0.02:
                 PROPS[name](cv, c, s, lt, **kw)
 
@@ -1928,6 +2491,47 @@ class Scene:
                     if 0 <= a < 1.5:
                         p = c + V(40 * math.sin(a * 4 + i) + (i % 3 - 1) * 40, -a * 160)
                         cv.heart(p, 22 * (1 - a / 1.5) + 4, SW * 0.6, INK, color or PINK)
+        elif kind == "likes_burst":
+            parts = [(r.uniform(-220, 220), r.uniform(-260, -120), r.uniform(0, 0.6), r.choice(("heart", "star", "up")))
+                     for _ in range(count or 12)]
+
+            def draw(cv, t):
+                lt = t - t0
+                c = self.resolve(t, at, anchor, offset, x, y)
+                for vx, vy, dly, knd in parts:
+                    a = lt - dly
+                    if 0 <= a < 1.4:
+                        u = a / 1.4
+                        p = c + V(vx * u + 20 * math.sin(a * 5), vy * u)
+                        sz = 20 * (1 - u * 0.7) * intensity
+                        if knd == "heart":
+                            cv.heart(p, sz, SW * 0.55, INK, color or PINK)
+                        elif knd == "star":
+                            cv.star(p, sz, 5, a * 2, SW * 0.55, INK, YELLOW)
+                        else:
+                            cv.circle(p, sz, SW * 0.55, INK, LIGHT_BLUE, wob=0)
+                            cv.text(p, "+1", sz * 0.9, PAPER)
+        elif kind == "fireworks":
+            n_b = count or 4
+            bursts = [(r.uniform(-320, 320), r.uniform(-220, 120), j * 0.28, r.choice(CONFETTI_COLORS))
+                      for j in range(n_b)]
+
+            def draw(cv, t):
+                lt = t - t0
+                c0 = self.resolve(t, at, anchor, offset, x, y)
+                for bx, by, dly, col in bursts:
+                    a = lt - dly
+                    if 0 <= a < 1.1:
+                        u = ease_out(a / 1.1)
+                        bc = c0 + V(bx * intensity, by * intensity)
+                        R = 160 * intensity * u
+                        for k in range(14):
+                            d = rot(V(1, 0), k * 2 * math.pi / 14)
+                            p1 = bc + d * (R * 0.55) + V(0, 45 * u * u)
+                            p2 = bc + d * R + V(0, 45 * u * u)
+                            cv.line(p1, p2, SW * 0.75 * (1 - u * 0.8) + 1, color or col, wob=0)
+                        if u < 0.7:
+                            cv.star(bc, 22 * (1 - u), 4, a * 4, SW * 0.5, INK, YELLOW)
         elif kind == "speed_lines":
             parts = [(r.uniform(0, BH), r.uniform(0, BW), r.uniform(150, 400)) for _ in range(count or 18)]
 

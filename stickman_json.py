@@ -26,7 +26,7 @@ COLOR_NAMES = ["INK", "PAPER", "GRID", "GREEN", "LIGHT_GREEN", "GOLD", "YELLOW",
                "LIGHT_BLUE", "GRAY", "LIGHT_GRAY", "ORANGE", "PURPLE"]
 ANCHORS = ["head", "above_head", "top", "face", "mouth", "chest", "hip", "feet", "hand_r", "hand_l",
            "left", "right"]
-ANIMS = ["pop", "drop", "grow", "slide_left", "slide_right", "float", "none"]
+ANIMS = ["pop", "drop", "grow", "slide_left", "slide_right", "float", "bounce", "pulse", "none"]
 ONLY = ["arms", "right", "left", "body", "legs"]
 HANDS = list(E.HAND_SHAPES)
 POSE_FIELDS = ["r", "l", "crouch", "tilt", "lean", "hipx", "stance", "liftl", "liftr", "sit", "kneel",
@@ -291,7 +291,7 @@ def _prop_kw(e):
             v = e[k]
             if k == "color":
                 v = color(v)
-            elif k == "bars" and isinstance(v, list):
+            elif k in ("bars", "slices", "points") and isinstance(v, list):
                 v = tuple(v)
             kw[k] = v
     return kw

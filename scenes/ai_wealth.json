@@ -1,0 +1,705 @@
+{
+  "title": "How to Become Rich in the Age of AI",
+  "duration": 120,
+  "fps": 30,
+  "background": "grid",
+  "output": "ai_wealth.mp4",
+  "sound": true,
+  "sfx_volume": 0.8,
+  "fade_in": 0.3,
+  "fade_out": 0.5,
+  "music": {
+    "style": "upbeat",
+    "volume": 0.25,
+    "start": 0,
+    "end": 120,
+    "bpm": 110
+  },
+  "characters": [
+    {
+      "name": "bob",
+      "x": 0.32,
+      "ground": 0.86,
+      "scale": 1.0,
+      "color": "INK",
+      "facing": 1,
+      "visible": true
+    }
+  ],
+  "events": [
+    {
+      "type": "title",
+      "start": 0,
+      "end": 7.5,
+      "text": "RICH IN THE AI AGE",
+      "sub": "Build skills. Create value. Grow wealth.",
+      "size": 92,
+      "color": "GREEN",
+      "y": 0.35
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 0.3,
+      "pose": "think",
+      "face": "thinking",
+      "dur": 0.35
+    },
+    {
+      "type": "prop",
+      "prop": "question",
+      "start": 1,
+      "end": 3,
+      "x": 0.43,
+      "y": 0.36,
+      "scale": 0.8,
+      "anim": "pop"
+    },
+    {
+      "type": "caption",
+      "start": 7.5,
+      "end": 13,
+      "text": "AI is changing how money is made",
+      "pos": "top",
+      "size": 48,
+      "color": "INK"
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 7.7,
+      "pose": "shocked",
+      "face": "surprised",
+      "dur": 0.3,
+      "ease": "back"
+    },
+    {
+      "type": "prop",
+      "prop": "laptop",
+      "start": 8,
+      "end": 14,
+      "x": 0.68,
+      "y": 0.77,
+      "scale": 1.2,
+      "anim": "pop",
+      "label": "AI"
+    },
+    {
+      "type": "effect",
+      "effect": "sparkles",
+      "start": 9,
+      "end": 12,
+      "x": 0.68,
+      "y": 0.51,
+      "count": 12,
+      "color": "LIGHT_BLUE"
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 13,
+      "pose": "point_up",
+      "dur": 0.3,
+      "ease": "back",
+      "face": "excited"
+    },
+    {
+      "type": "caption",
+      "start": 13,
+      "end": 19,
+      "text": "The opportunity is bigger than ever",
+      "pos": "bottom",
+      "size": 46,
+      "color": "GREEN"
+    },
+    {
+      "type": "prop",
+      "prop": "rocket",
+      "start": 14,
+      "end": 19,
+      "x": 0.73,
+      "y": 0.43,
+      "scale": 1.15,
+      "anim": "grow",
+      "flame": true,
+      "color": "ORANGE"
+    },
+    {
+      "type": "caption",
+      "start": 19,
+      "end": 25,
+      "text": "But tools alone won't make you rich",
+      "pos": "top",
+      "size": 44,
+      "color": "RED"
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 19.1,
+      "pose": "stop",
+      "dur": 0.3,
+      "face": "focused"
+    },
+    {
+      "type": "prop",
+      "prop": "question",
+      "start": 20,
+      "end": 23,
+      "x": 0.7,
+      "y": 0.43,
+      "scale": 1,
+      "anim": "bounce"
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 25,
+      "pose": "think",
+      "dur": 0.35,
+      "face": "thinking"
+    },
+    {
+      "type": "caption",
+      "start": 25,
+      "end": 31,
+      "text": "Learn skills people will pay for",
+      "pos": "top",
+      "size": 46,
+      "color": "INK"
+    },
+    {
+      "type": "prop",
+      "prop": "brain",
+      "start": 26,
+      "end": 31,
+      "x": 0.68,
+      "y": 0.36,
+      "scale": 1.1,
+      "anim": "pop",
+      "glow": true,
+      "color": "PURPLE"
+    },
+    {
+      "type": "caption",
+      "start": 31,
+      "end": 37,
+      "text": "Writing, coding, sales, design, marketing",
+      "pos": "bottom",
+      "size": 42,
+      "color": "BLUE"
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 31.2,
+      "pose": "type",
+      "dur": 0.35,
+      "face": "focused"
+    },
+    {
+      "type": "prop",
+      "prop": "workstation",
+      "start": 31.2,
+      "end": 37,
+      "char": "bob",
+      "anchor": "feet",
+      "label": "LEARN",
+      "anim": "pop"
+    },
+    {
+      "type": "layer",
+      "char": "bob",
+      "start": 32,
+      "end": 36.5,
+      "layer": "type"
+    },
+    {
+      "type": "caption",
+      "start": 37,
+      "end": 43,
+      "text": "Use AI to learn twice as fast",
+      "pos": "top",
+      "size": 46,
+      "color": "GREEN"
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 37.1,
+      "pose": "read",
+      "dur": 0.3,
+      "face": "focused"
+    },
+    {
+      "type": "prop",
+      "prop": "book",
+      "start": 37.2,
+      "end": 43,
+      "char": "bob",
+      "anchor": "hand_r",
+      "scale": 0.8,
+      "anim": "pop",
+      "color": "BLUE",
+      "title": "AI SKILLS"
+    },
+    {
+      "type": "effect",
+      "effect": "sparkles",
+      "start": 40,
+      "end": 43,
+      "x": 0.69,
+      "y": 0.37,
+      "count": 10,
+      "color": "GOLD"
+    },
+    {
+      "type": "caption",
+      "start": 43,
+      "end": 49,
+      "text": "Next, solve a real painful problem",
+      "pos": "top",
+      "size": 46,
+      "color": "INK"
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 43.1,
+      "pose": "think",
+      "dur": 0.3,
+      "face": "thinking"
+    },
+    {
+      "type": "prop",
+      "prop": "target",
+      "start": 44,
+      "end": 49,
+      "x": 0.71,
+      "y": 0.45,
+      "scale": 1.1,
+      "anim": "pop",
+      "arrow": true,
+      "color": "RED"
+    },
+    {
+      "type": "caption",
+      "start": 49,
+      "end": 55,
+      "text": "Save businesses time, effort, or money",
+      "pos": "bottom",
+      "size": 42,
+      "color": "GREEN"
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 49.1,
+      "pose": "point_side",
+      "dur": 0.3,
+      "face": "proud"
+    },
+    {
+      "type": "prop",
+      "prop": "clock",
+      "start": 50,
+      "end": 54,
+      "x": 0.68,
+      "y": 0.39,
+      "scale": 0.9,
+      "anim": "bounce"
+    },
+    {
+      "type": "prop",
+      "prop": "money_bag",
+      "start": 51,
+      "end": 55,
+      "x": 0.79,
+      "y": 0.56,
+      "scale": 0.8,
+      "anim": "pop"
+    },
+    {
+      "type": "caption",
+      "start": 55,
+      "end": 61,
+      "text": "Build one simple useful solution",
+      "pos": "top",
+      "size": 46,
+      "color": "INK"
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 55.1,
+      "pose": "type",
+      "dur": 0.35,
+      "face": "focused"
+    },
+    {
+      "type": "prop",
+      "prop": "laptop",
+      "start": 55.2,
+      "end": 61,
+      "x": 0.68,
+      "y": 0.76,
+      "scale": 1.15,
+      "anim": "pop",
+      "label": "MY PRODUCT",
+      "color": "BLUE"
+    },
+    {
+      "type": "layer",
+      "char": "bob",
+      "start": 56,
+      "end": 60.5,
+      "layer": "type"
+    },
+    {
+      "type": "caption",
+      "start": 61,
+      "end": 67,
+      "text": "Start with a service, not perfection",
+      "pos": "bottom",
+      "size": 42,
+      "color": "BLUE"
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 61.1,
+      "pose": "present",
+      "dur": 0.3,
+      "face": "proud"
+    },
+    {
+      "type": "prop",
+      "prop": "checklist",
+      "start": 62,
+      "end": 67,
+      "x": 0.72,
+      "y": 0.44,
+      "scale": 0.95,
+      "anim": "grow",
+      "items": [
+        "Find a client",
+        "Deliver value",
+        "Improve"
+      ],
+      "checked": 1,
+      "color": "GREEN"
+    },
+    {
+      "type": "caption",
+      "start": 67,
+      "end": 73,
+      "text": "Find your first paying customer",
+      "pos": "top",
+      "size": 48,
+      "color": "GREEN"
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 67.1,
+      "pose": "handshake",
+      "dur": 0.35,
+      "ease": "back",
+      "face": "happy"
+    },
+    {
+      "type": "prop",
+      "prop": "coin",
+      "start": 68,
+      "end": 72,
+      "x": 0.72,
+      "y": 0.42,
+      "scale": 1.2,
+      "anim": "pop",
+      "flip": true
+    },
+    {
+      "type": "sound",
+      "start": 69,
+      "sound": "cha_ching",
+      "volume": 0.7
+    },
+    {
+      "type": "caption",
+      "start": 73,
+      "end": 79,
+      "text": "Charge for results, not just hours",
+      "pos": "bottom",
+      "size": 44,
+      "color": "INK"
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 73.1,
+      "pose": "present",
+      "dur": 0.3,
+      "face": "proud"
+    },
+    {
+      "type": "prop",
+      "prop": "credit_card",
+      "start": 74,
+      "end": 79,
+      "x": 0.72,
+      "y": 0.44,
+      "scale": 1.1,
+      "anim": "slide_left",
+      "label": "VALUE",
+      "color": "BLUE"
+    },
+    {
+      "type": "caption",
+      "start": 79,
+      "end": 85,
+      "text": "Share your work where customers gather",
+      "pos": "top",
+      "size": 42,
+      "color": "INK"
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 79.1,
+      "pose": "point_screen",
+      "dur": 0.3,
+      "face": "excited"
+    },
+    {
+      "type": "prop",
+      "prop": "youtube_play",
+      "start": 80,
+      "end": 85,
+      "x": 0.72,
+      "y": 0.43,
+      "scale": 1.15,
+      "anim": "pop",
+      "subs": 100,
+      "color": "RED"
+    },
+    {
+      "type": "prop",
+      "prop": "megaphone",
+      "start": 81,
+      "end": 85,
+      "x": 0.82,
+      "y": 0.6,
+      "scale": 0.75,
+      "anim": "bounce",
+      "waves": true,
+      "color": "ORANGE"
+    },
+    {
+      "type": "caption",
+      "start": 85,
+      "end": 91,
+      "text": "Listen, improve, and serve more people",
+      "pos": "bottom",
+      "size": 42,
+      "color": "GREEN"
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 85.1,
+      "pose": "listen",
+      "dur": 0.3,
+      "face": "focused"
+    },
+    {
+      "type": "prop",
+      "prop": "star",
+      "start": 86,
+      "end": 90,
+      "x": 0.69,
+      "y": 0.39,
+      "scale": 0.7,
+      "anim": "pulse",
+      "color": "GOLD"
+    },
+    {
+      "type": "caption",
+      "start": 91,
+      "end": 97,
+      "text": "Turn repeatable work into a system",
+      "pos": "top",
+      "size": 44,
+      "color": "INK"
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 91.1,
+      "pose": "plan_board",
+      "dur": 0.35,
+      "face": "focused"
+    },
+    {
+      "type": "prop",
+      "prop": "gear",
+      "start": 92,
+      "end": 97,
+      "x": 0.72,
+      "y": 0.44,
+      "scale": 1.15,
+      "anim": "pulse",
+      "color": "BLUE"
+    },
+    {
+      "type": "caption",
+      "start": 97,
+      "end": 103,
+      "text": "Avoid hype, scams, and easy-money promises",
+      "pos": "bottom",
+      "size": 40,
+      "color": "RED"
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 97.1,
+      "pose": "stop",
+      "dur": 0.3,
+      "face": "focused"
+    },
+    {
+      "type": "prop",
+      "prop": "exclamation",
+      "start": 98,
+      "end": 102,
+      "x": 0.7,
+      "y": 0.38,
+      "scale": 1.1,
+      "anim": "pop"
+    },
+    {
+      "type": "caption",
+      "start": 103,
+      "end": 109,
+      "text": "Keep profits; build a financial cushion",
+      "pos": "top",
+      "size": 42,
+      "color": "GREEN"
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 103.1,
+      "pose": "carry",
+      "dur": 0.35,
+      "face": "proud"
+    },
+    {
+      "type": "prop",
+      "prop": "money_bag",
+      "start": 104,
+      "end": 109,
+      "x": 0.72,
+      "y": 0.48,
+      "scale": 1.1,
+      "anim": "grow"
+    },
+    {
+      "type": "caption",
+      "start": 109,
+      "end": 115,
+      "text": "Invest thoughtfully for the long term",
+      "pos": "top",
+      "size": 44,
+      "color": "INK"
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 109.1,
+      "pose": "present",
+      "dur": 0.35,
+      "face": "proud"
+    },
+    {
+      "type": "prop",
+      "prop": "chart",
+      "start": 110,
+      "end": 115,
+      "x": 0.72,
+      "y": 0.43,
+      "scale": 1.1,
+      "anim": "grow",
+      "bars": [
+        0.2,
+        0.45,
+        0.7,
+        1.0
+      ],
+      "grow": true,
+      "color": "GREEN"
+    },
+    {
+      "type": "effect",
+      "effect": "sparkles",
+      "start": 112,
+      "end": 115,
+      "x": 0.75,
+      "y": 0.32,
+      "count": 12,
+      "color": "GOLD"
+    },
+    {
+      "type": "caption",
+      "start": 115,
+      "end": 120,
+      "text": "Use AI. Create value. Stay consistent.",
+      "pos": "top",
+      "size": 44,
+      "color": "GREEN"
+    },
+    {
+      "type": "pose",
+      "char": "bob",
+      "start": 115.1,
+      "pose": "victory",
+      "dur": 0.3,
+      "ease": "back",
+      "face": "very_happy"
+    },
+    {
+      "type": "layer",
+      "char": "bob",
+      "start": 115.4,
+      "end": 119.5,
+      "layer": "bounce"
+    },
+    {
+      "type": "effect",
+      "effect": "confetti",
+      "start": 116,
+      "end": 120,
+      "x": 0.5,
+      "y": 0.35,
+      "count": 30,
+      "color": "GOLD",
+      "intensity": 1
+    },
+    {
+      "type": "prop",
+      "prop": "trophy",
+      "start": 116.2,
+      "end": 120,
+      "x": 0.73,
+      "y": 0.57,
+      "scale": 1.1,
+      "anim": "pop"
+    },
+    {
+      "type": "sound",
+      "start": 116.3,
+      "sound": "success",
+      "volume": 0.8
+    }
+  ]
+}

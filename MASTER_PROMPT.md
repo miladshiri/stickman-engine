@@ -44,7 +44,7 @@ scene.add(fn, t0=0, t1=None, z=20, screen=False)     # custom drawing, see below
 scene.render("out.mp4")
 ```
 - `prop(...)`: to attach a prop to a character, pass `at="bob"` plus an `anchor` name; otherwise give normalized `x, y`. `offset` is measured in character heights.
-- `anim` values: `pop` | `drop` | `grow` | `slide_left` | `slide_right` | `float` | `none`.
+- `anim` values: `pop` | `drop` | `grow` | `slide_left` | `slide_right` | `float` | `bounce` | `pulse` | `none`.
 - Z-order guide: background scenery −10..−1, characters 0, props 5, effects 15, custom graphics 20, speech 60, captions/counter/title 99–101 (screen space).
 
 ### Character (`bob = scene.add_character(...)`)
@@ -68,14 +68,15 @@ bob.anchor(t, name, offset=(0,0))                 # returns a world point (np.ar
 - `ease` values: `linear, in, out, io, back` (overshoot), `elastic, bounce`.
 
 **POSES (exact names):**
-`rest, hands_on_hips, wave, wave_both, point_up, point_side, point_down, think, facepalm, phone, shrug, cheer, victory, fist_pump, clap, cross_arms, hands_on_head, scared, stop, present, welcome, thumbs_up, peace, angry, sad, tired, flex, type, carry, hold_up, pray, reach_up, surrender, explain, dance_a, dance_b, crouch, jump_prep, kick, balance, salute, bow, head_scratch, shush, listen, look_far, drink, stretch, point_you, cry, write, read, push, handshake, shocked, laugh, nervous, embarrassed, call_out, beckon, measure, point_screen, punch, fight_stance, fall_back, sit, kneel`
+`rest, hands_on_hips, wave, wave_both, point_up, point_side, point_down, think, facepalm, phone, shrug, cheer, victory, fist_pump, clap, cross_arms, hands_on_head, scared, stop, present, welcome, thumbs_up, peace, angry, sad, tired, flex, type, carry, hold_up, pray, reach_up, surrender, explain, dance_a, dance_b, crouch, jump_prep, kick, balance, salute, bow, head_scratch, shush, listen, look_far, drink, stretch, point_you, cry, write, read, push, handshake, shocked, laugh, nervous, embarrassed, call_out, beckon, measure, point_screen, punch, fight_stance, fall_back, sit, kneel, present_both, plan_board, film, podcast, meditate, juggle, graduate, celebrate_jump`
 - `salute`: respect / "yes sir". `bow`: thanks / greeting / apology (leans toward screen-right; use `turn` or `lean=-0.45` to bow the other way).
 - `head_scratch`: confused (face `confused`). `shush`: secret / "quiet". `listen`: hand to ear, "what?" / hearing news.
 - `look_far`: searching / looking ahead. `drink`: pair with `bob.hold("coffee", ...)`. `stretch`: waking up / relaxing.
 - `point_you`: talking to the viewer ("YOU can do it"). `cry`: sad moment (face `sad`, add `prop("sweat")` near the eyes for tears).
-- `write`: pair with `hold("sign", hand="l", text="")` as a notepad. `read`: pair with `hold("book", ...)`. `push`: pushes toward screen-right (box, wall). `handshake`: two characters ~0.17 apart; the left one uses `"handshake"`, the right one uses `pose(t, "handshake", r=(0.2, 0.92), l=(1.0, 0.75), lh="fist", rh="relaxed", lean=-0.05)` so it reaches left.
+- `write`: pair with `hold("sign", hand="l", text="")` as a notepad + `layer("write", ...)`. `read`: pair with `hold("book", ...)`. `push`: pushes toward screen-right (box, wall). `handshake`: two characters ~0.17 apart; the left one uses `"handshake"`, the right one uses `pose(t, "handshake", r=(0.2, 0.92), l=(1.0, 0.75), lh="fist", rh="relaxed", lean=-0.05)` so it reaches left.
 - `shocked` (face `shocked`), `laugh` (face `laugh` + layer `laugh`), `nervous` (face `worried` + layer `tremble`), `embarrassed` (hand behind head, face `happy` + `sweat` prop).
-- `call_out`: hands around mouth, shouting (face `excited`, mopen). `beckon`: "come here" (add layer `wave`). `measure`: "this big". `point_screen`: points up-left at a chart/board behind (place `chart` there).
+- `call_out`: hands around mouth, shouting (face `excited`, mopen). `beckon`: "come here" (add layer `wave`). `measure`: "this big". `point_screen`: points up-left at a chart/board behind (place `chart`, `line_chart`, or `whiteboard` there).
+- `present_both`: presenting with both hands wide. `plan_board`: pointing at a board/roadmap while thinking. `film`: operating a `camera_rec` on a tripod. `podcast`: speaking into a `microphone` on a desk. `meditate`: calm focus (pair with `layer("float", ...)`). `juggle`: multitasking (pair with `layer("juggle", ...)`). `graduate`: holding up a `certificate` or wearing a `graduation_cap`. `celebrate_jump`: mid-air star jump pose.
 - `punch` (add `burst` effect at `hand_r`), `fight_stance` (face `angry`), `fall_back` (slip / hit; follow with `shocked` or a `shake` effect).
 - `sit`: sits on a seat. Place `scene.prop("chair", t0, t1, at=name, anchor="feet", anim="none" or "pop", z=-1)` so the chair is BEHIND the character. Combine `sit` with arm poses: `bob.pose(t, "sit"); bob.pose(t, "phone", only="arms")`. Don't walk while sitting; stand up with `bob.pose(t, "rest")` first.
 - `kneel`: one knee down (proposal, defeat, tying shoes, pleading). Combine with `only="arms"` poses like `pray`, `sad`, `present`.
@@ -91,15 +92,21 @@ bob.anchor(t, name, offset=(0,0))                 # returns a world point (np.ar
 - `crouch` (−0.2 stretch .. 1 deep squat), `tilt` (head, rad), `lean` (rad), `hipx` (hip sway), `stance` (feet width), `liftl` / `liftr` (raise a foot 0..1), `sit` (0..1 seated on a chair), `kneel` (0..1 left knee on the ground).
 - `rh` / `lh` hand shapes: `open, relaxed, fist, point, thumb, peace`.
 
-**FACES:** `neutral, happy, very_happy, laugh, excited, proud, smug, sad, worried, scared, angry, furious, surprised, shocked, thinking, focused, confused, disgusted, sleepy, love`
+**FACES:** `neutral, happy, very_happy, laugh, excited, proud, confident, determined, calm, curious, serious, smug, sad, worried, scared, nervous, embarrassed, tired, bored, angry, furious, surprised, shocked, thinking, focused, confused, disgusted, sleepy, love`
 Face fields: `smile, mopen, brow, btilt, lookx, looky, eyes, happy, closed`.
 
-**LAYERS:** `wave, wave_l, wave_both, talk, nod, shake_head, tremble, bounce, clap, type, laugh, look_around, float, breathe_hard`
+**LAYERS:** `wave, wave_l, wave_both, talk, nod, shake_head, tremble, bounce, clap, type, laugh, look_around, float, breathe_hard, write, juggle`
 
-**PROPS:** `lightbulb, laptop, desk, workstation, money_bill, coin, coin_stack, money_bag, phone, coffee, sign(text=), box(label=), trophy, heart, star, question, exclamation, sweat, zzz, anger, music_note, chart(bars=, grow=), clock, cloud, sun, tree, house, chair(color=), book(color=, title=)`
+**PROPS:**
+- **General & Scenery:** `lightbulb(on=True, color=YELLOW), laptop(label="", color=LIGHT_BLUE), desk(width=280, height=130), workstation(label=""), phone, coffee, sign(text="!", color=PAPER), box(label=""), trophy, heart(color=PINK), star(color=YELLOW), question, exclamation, sweat, zzz, anger, music_note, clock, cloud, sun, tree, house, chair(color=LIGHT_GRAY)`
+- **Productivity & Focus:** `checklist(items=4, checked=3, color=GREEN), hourglass(color=GOLD), target(arrow=True, color=RED), rocket(flame=True, color=RED), battery(level=1.0, charge=True, color=GREEN), gear(color=GRAY), alarm_clock(ring=True, color=RED)`
+- **Making Money & Finance:** `money_bill(ang=0.0), coin(flip=0.0), coin_stack(n=5), money_bag, chart(bars=(0.25,0.45,0.7,1.0), grow=1.0, color=GREEN), piggy_bank(coin_drop=True, color=PINK), credit_card(label="CARD", color=LIGHT_BLUE), pie_chart(slices=(0.45,0.30,0.25), grow=1.0), line_chart(points=(0.15,0.35,0.28,0.65,0.55,0.95), grow=1.2, color=GREEN), safe(open_at=0.6, color=GRAY), diamond(color=LIGHT_BLUE), magnet(coins=True, color=RED)`
+- **Planning & Strategy:** `calendar(day="15", mark=True, color=RED), roadmap(steps=4, color=GREEN), whiteboard(title="PLAN", color=PAPER), compass(color=GOLD)`
+- **Education & Ideas:** `book(color=LIGHT_BLUE, title=""), graduation_cap(color=INK), brain(glow=True, color=PINK), certificate(label="A+", color=GOLD), globe(color=LIGHT_BLUE)`
+- **YouTube & Content Creation:** `youtube_play(subs="", color=RED), subscribe_btn(clicked_at=0.6, text="SUBSCRIBE"), camera_rec(rec=True), microphone(waves=True, color=GRAY), video_player(progress=0.85, likes=True, color=RED), megaphone(waves=True, color=ORANGE)`
 - Placement: `tree`, `house`, `desk`, `workstation` and `chair` take a *ground point*. Use `y` equal to the character's `ground`, or `at=name, anchor="feet"`. Give `chair` `z=-1`.
 
-**EFFECTS:** `money_rain, confetti, coins_burst, burst, sparkles, hearts, speed_lines, smoke, shake (camera), flash`
+**EFFECTS:** `money_rain, confetti, coins_burst, burst, sparkles, hearts, speed_lines, smoke, shake (camera), flash, likes_burst, fireworks`
 
 ### SOUND (automatic + manual)
 Sound effects are synthesized by the engine (no audio files needed) and muxed into the MP4.
@@ -163,7 +170,7 @@ def growth_arrow(g):                             # g: Ctx
 3. **Timing.** Pose transitions take 0.25–0.5 s. Use `ease="back"` for energetic poses (cheer, point_up, surprised), `"io"` for calm ones. Put an anticipation pose before a big action (`jump_prep` / `crouch` before `jump` or `cheer`).
 4. **Chain with returned end times** so actions never overlap by accident.
 5. **Combine.** Walk while holding a phone: `bob.pose(t, "phone", only="right"); bob.hold("phone", ...); bob.walk_to(...)`.
-6. **Layout.** Characters stand around x 0.25–0.75 and ground 0.82–0.88. Keep captions at the top, speech bubbles near the characters, and custom graphics away from faces.
+6. **Layout & Staging.** Characters stand around x 0.25–0.75 and ground 0.82–0.88. **Vary the character's horizontal position (left, middle, right) across different scenes/beats** — never leave a character parked in the same spot for the whole video. Have them `walk_to` / `run_to` between the **left** (`x ≈ 0.25–0.35`), **middle** (`x ≈ 0.50`), and **right** (`x ≈ 0.65–0.75`) as topics/beats change, and place props, charts, or motion graphics on the opposite side to balance the frame. Keep captions at the top, speech bubbles near the characters, and custom graphics away from faces.
 7. **Motion graphics** must ease in and out. Never pop in linearly; use `pop_scale`, `ease_out`, or a draw-on (grow a curve with `lerp`). Keep the doodle style: ink outlines, flat light fills, wobble.
 8. **Performance.** Draw only inside each graphic's time window, and don't create images per frame.
 9. **Output.** Return one complete runnable file with no placeholders, then the run commands. Don't explain the engine back to me.
